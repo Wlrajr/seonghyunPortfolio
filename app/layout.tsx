@@ -9,41 +9,10 @@ const notoSansKr = Noto_Sans_KR({
   variable: '--font-noto-sans-kr',
 })
 
-/**
- * OG 이미지 등 절대 URL의 호스트.
- * `VERCEL_URL`만 쓰면 배포별 임시 도메인(…-projects.vercel.app)이 들어가고,
- * 그 URL은 비공개 배포에서 401이 나와 카카오 등 미리보기가 비게 됩니다.
- * 프로덕션 고정 도메인은 `VERCEL_PROJECT_PRODUCTION_URL` 또는 `NEXT_PUBLIC_SITE_URL`을 씁니다.
- */
-function siteMetadataBase(): URL {
-  const site = process.env.NEXT_PUBLIC_SITE_URL?.trim()
-  if (site) {
-    return new URL(site)
-  }
-  const productionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim()
-  if (productionHost) {
-    const origin = productionHost.startsWith('http')
-      ? productionHost
-      : `https://${productionHost}`
-    return new URL(origin)
-  }
-  if (process.env.VERCEL_URL) {
-    return new URL(`https://${process.env.VERCEL_URL}`)
-  }
-  return new URL('http://localhost:3000')
-}
+/** OG·canonical 등 메타데이터 절대 URL 기준 (프로덕션 배포 도메인) */
+const metadataBase = new URL('https://seonghyun-portfolio-two.vercel.app')
 
-const metadataBase = siteMetadataBase()
-/** Twitter 등 일부 스크래퍼는 절대 URL을 기대할 수 있음 */
 const ogImageAbsoluteUrl = new URL('/og-image.png', metadataBase).toString()
-
-/** 링크 미리보기(OG) — `public/og-image.png` (1200×630) */
-const ogImage = {
-  url: '/og-image.png',
-  width: 1200,
-  height: 630,
-  type: 'image/png',
-} as const
 
 export const metadata: Metadata = {
   metadataBase,
@@ -56,7 +25,13 @@ export const metadata: Metadata = {
     siteName: '최성현 포트폴리오',
     title: '최성현 포트폴리오',
     description: '신입 풀스택 개발자 최성현의 포트폴리오입니다.',
-    images: [ogImage],
+    images: [
+      {
+        url: '/og-image.png',
+        width: 1200,
+        height: 630,
+      },
+    ],
   },
   twitter: {
     card: 'summary_large_image',
