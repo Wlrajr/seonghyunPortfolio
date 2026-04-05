@@ -17,7 +17,7 @@ export function Reveal({
       className={className}
       initial={{ opacity: 0, y }}
       whileInView={{ opacity: 1, y: 0 }}
-      viewport={{ once: true, margin: "-48px 0px -12% 0px" }}
+      viewport={{ once: true, amount: 0.12, margin: "0px 0px 48px 0px" }}
       transition={{ duration: 0.6, delay, ease }}
       {...props}
     >
@@ -42,7 +42,7 @@ export function RevealStagger({
       className={className}
       initial="hidden"
       whileInView="show"
-      viewport={{ once: true, margin: "-40px 0px -10% 0px" }}
+      viewport={{ once: true, amount: 0.1, margin: "0px 0px 40px 0px" }}
       variants={{
         hidden: {},
         show: {

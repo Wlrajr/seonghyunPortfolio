@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import { useEffect, useRef, useState, type ReactNode } from "react"
 import Image from "next/image"
@@ -50,7 +50,7 @@ const detailSectionNav = [
 ] as const
 
 const detailHero =
-  "relative overflow-hidden border-y border-slate-200/80 bg-transparent p-6 shadow-none ring-0 md:p-8"
+  "relative overflow-hidden border-y border-slate-200/80 bg-transparent p-4 shadow-none ring-0 sm:p-6 md:p-8"
 
 function RevealSection({ children, className }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -491,7 +491,8 @@ export function ProjectDetailView({ project }: { project: Project }) {
   useEffect(() => {
     const ids = detailSectionNav.map((s) => s.id)
     const updateActive = () => {
-      setActiveSection(activeSectionIdForScroll(ids, { beforeFirstPadding: 120 }))
+      const next = activeSectionIdForScroll(ids, { beforeFirstPadding: 120 })
+      setActiveSection((prev) => (prev === next ? prev : next))
     }
     updateActive()
     window.addEventListener("scroll", updateActive, { passive: true })
@@ -547,21 +548,21 @@ export function ProjectDetailView({ project }: { project: Project }) {
         <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden />
         <span className="truncate sm:whitespace-nowrap">포트폴리오로 돌아가기</span>
       </Link>
-      <div className="relative px-5 py-12 md:px-12 md:py-16 lg:pl-52 xl:pl-60">
-        <div className="mx-auto w-full max-w-6xl">
+      <div className="relative px-4 py-10 sm:px-5 sm:py-12 md:px-10 md:py-14 lg:px-12 lg:py-16 lg:pl-52 xl:pl-60">
+        <div className="mx-auto w-full max-w-6xl min-w-0">
           <RevealSection>
-            <div className="mb-8 flex items-center justify-between gap-4">
-              <div ref={backLinkAnchorRef}>
+            <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+              <div ref={backLinkAnchorRef} className="min-w-0">
                 <Link
                   href="/"
                   tabIndex={backLinkPinned ? -1 : undefined}
-                  className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-sky-800"
+                  className="inline-flex max-w-full items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-sky-800"
                 >
-                  <ArrowLeft className="h-4 w-4" />
+                  <ArrowLeft className="h-4 w-4 shrink-0" />
                   포트폴리오로 돌아가기
                 </Link>
               </div>
-              <div className="font-mono text-xs uppercase tracking-[0.16em] text-slate-500">
+              <div className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 sm:text-xs sm:tracking-[0.16em]">
                 Project {project.id}
               </div>
             </div>
@@ -584,33 +585,33 @@ export function ProjectDetailView({ project }: { project: Project }) {
 
                   {isLms ? (
                     <>
-                      <h1 className="font-display mt-6 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl md:text-5xl">
+                      <h1 className="font-display mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-3xl sm:leading-snug md:text-4xl lg:text-5xl">
                         무중단 통합 교육관 관리 시스템
                       </h1>
-                      <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-base md:text-lg">
                         통합 학사운영을 위한, 클라우드 기반 교육관 관리 프로그램
                       </p>
-                      <div className="mt-6 flex justify-start">
-                        <div className="relative h-[160px] w-[360px] rounded-[1.5rem] border border-sky-200/40 bg-white/30 p-5 shadow-none backdrop-blur-md ring-0 md:h-[190px] md:w-[460px]">
+                      <div className="mt-5 flex justify-center sm:mt-6 sm:justify-start">
+                        <div className="relative h-[min(11rem,48vw)] w-full max-w-full rounded-[1.25rem] border border-sky-200/40 bg-white/30 p-4 shadow-none backdrop-blur-md ring-0 sm:h-[160px] sm:max-w-[360px] sm:rounded-[1.5rem] sm:p-5 md:h-[190px] md:max-w-[460px]">
                           <Image src="/lmsync-logo.png" alt="LMSync Logo" fill className="object-contain" priority />
                         </div>
                       </div>
                     </>
                   ) : (
                     <>
-                      <h1 className="font-display mt-6 text-3xl font-semibold tracking-[-0.03em] sm:text-4xl md:text-5xl">
+                      <h1 className="font-display mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-3xl sm:leading-snug md:text-4xl lg:text-5xl">
                         {project.title}
                       </h1>
-                      <p className="mt-5 max-w-2xl text-base leading-relaxed text-slate-600 sm:text-lg">
+                      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-base md:text-lg">
                         기업의 핵심 업무 프로세스를 통합 관리 플랫폼
                       </p>
-                      <div className="mt-6 flex justify-start">
-                        <div className="relative h-[220px] w-[380px] rounded-[1.5rem] border border-sky-200/40 bg-white/30 p-4 shadow-none backdrop-blur-md ring-0 md:h-[260px] md:w-[500px]">
+                      <div className="mt-5 flex justify-center sm:mt-6 sm:justify-start">
+                        <div className="relative h-[min(14rem,58vw)] w-full max-w-full rounded-[1.25rem] border border-sky-200/40 bg-white/30 p-3 shadow-none backdrop-blur-md ring-0 sm:h-[220px] sm:max-w-[380px] sm:rounded-[1.5rem] sm:p-4 md:h-[260px] md:max-w-[500px]">
                           <Image
                             src="/erp-main.png"
                             alt="ERP 통합 업무 시스템 개념 일러스트"
                             fill
-                            className="object-contain p-3"
+                            className="object-contain p-2 sm:p-3"
                             priority
                           />
                         </div>

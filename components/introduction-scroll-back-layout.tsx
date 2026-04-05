@@ -1,4 +1,4 @@
-"use client"
+﻿"use client"
 
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
@@ -46,7 +46,8 @@ export function IntroductionScrollBackLayout({
     if (ids.length === 0) return
 
     const updateActive = () => {
-      setActiveSection(activeSectionIdForScroll(ids, { beforeFirstPadding: 120 }))
+      const next = activeSectionIdForScroll(ids, { beforeFirstPadding: 120 })
+      setActiveSection((prev) => (prev === next ? prev : next))
     }
 
     updateActive()
@@ -77,8 +78,8 @@ export function IntroductionScrollBackLayout({
       {sectionNav.length > 0 ? (
         <SectionScrollRail items={sectionNav} activeId={activeSection} ariaLabel="자기소개 섹션 이동" />
       ) : null}
-      <div className="relative px-5 py-12 md:px-12 md:py-16 lg:pl-52 xl:pl-60">
-        <div className="mx-auto w-full max-w-3xl space-y-6 md:space-y-8">
+      <div className="relative px-4 py-10 sm:px-5 sm:py-12 md:px-10 md:py-14 lg:px-12 lg:py-16 lg:pl-52 xl:pl-60">
+        <div className="mx-auto w-full max-w-3xl space-y-5 sm:space-y-6 md:space-y-8">
           <header className={introductionCardClass}>
             <div ref={backLinkAnchorRef}>
               <Link
@@ -86,11 +87,11 @@ export function IntroductionScrollBackLayout({
                 tabIndex={backLinkPinned ? -1 : undefined}
                 className="inline-flex items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-sky-800"
               >
-                <ArrowLeft className="h-4 w-4" />
+                <ArrowLeft className="h-4 w-4 shrink-0" />
                 포트폴리오로 돌아가기
               </Link>
             </div>
-            <h1 className="font-display mt-8 text-3xl font-semibold tracking-[-0.03em] text-slate-900 md:mt-10 md:text-4xl">
+            <h1 className="font-display mt-6 text-2xl font-semibold leading-snug tracking-[-0.03em] text-slate-900 sm:mt-8 sm:text-3xl md:mt-10 md:text-4xl">
               {title}
             </h1>
           </header>

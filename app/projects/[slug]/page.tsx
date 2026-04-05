@@ -3,11 +3,11 @@ import { ProjectDetailView } from "@/components/project-detail-view"
 import { getProjectBySlug } from "@/lib/projects"
 
 type PageProps = {
-  params: Promise<{ slug: string }>
+  params: Promise<{ slug: string }> | { slug: string }
 }
 
 export default async function ProjectDetailPage({ params }: PageProps) {
-  const { slug } = await params
+  const { slug } = await Promise.resolve(params)
   const project = getProjectBySlug(slug)
   if (!project) notFound()
   return <ProjectDetailView project={project} />
