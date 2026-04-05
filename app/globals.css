@@ -3,22 +3,21 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* 라이트 배경: 본문 #2d2d5e 계열, 제목 #1a1a2e — WCAG AA 대비 목표 */
+/* 라이트 배경: 본문·제목 톤을 살짝 진하게 해 밝은 그라데이션 위 가독성 확보 */
 :root {
-  --background: oklch(0.9 0.02 220);
-  /* 본문 기본 (≈ #2d2d5e) */
-  --foreground: #2d2d5e;
+  --background: oklch(0.88 0.022 230);
+  /* 본문 기본 — slate-800 계열 */
+  --foreground: #1e293b;
   --card: oklch(0.97 0.01 220 / 0.9);
-  --card-foreground: #1a1a2e;
+  --card-foreground: #0f172a;
   --popover: oklch(0.98 0.01 220 / 0.94);
-  --popover-foreground: #1a1a2e;
+  --popover-foreground: #0f172a;
   --primary: oklch(0.48 0.14 240);
   --primary-foreground: oklch(0.98 0.008 210);
   --secondary: oklch(0.9 0.02 210 / 0.88);
-  --secondary-foreground: #1a1a2e;
+  --secondary-foreground: #0f172a;
   --muted: oklch(0.9 0.02 215 / 0.88);
-  /* 보조 텍스트 — 연한 배경에서 4.5:1 이상 유지 */
-  --muted-foreground: #3d4d6e;
+  --muted-foreground: #334155;
   --accent: oklch(0.52 0.16 300);
   --accent-foreground: #f8fafc;
   --destructive: oklch(0.55 0.2 25);
@@ -107,10 +106,10 @@
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
   /* 의미 색 (Tailwind: text-text-heading 등) */
-  --color-text-heading: #1a1a2e;
-  --color-text-body: #2d2d5e;
-  --color-text-muted: #3d4d6e;
-  --color-text-subtle: #4a5688;
+  --color-text-heading: #0f172a;
+  --color-text-body: #1e293b;
+  --color-text-muted: #334155;
+  --color-text-subtle: #475569;
   --color-accent-blue: #075985;
   --color-accent-violet: #5b21b6;
   --radius-sm: calc(var(--radius) - 4px);
@@ -135,11 +134,14 @@
     @apply bg-background font-medium text-foreground antialiased;
     font-family: var(--font-sans);
     min-height: 100vh;
+    /* 베이스를 살짝 차분한 슬레이트 톤으로 두고, 상단 화이트 블룸·가장자리 딤으로 글자 대비 보강 */
     background-image:
-      radial-gradient(circle at top, rgba(255, 255, 255, 0.26), transparent 18%),
-      radial-gradient(circle at 16% 18%, rgba(125, 211, 252, 0.08), transparent 24%),
-      radial-gradient(circle at 84% 18%, rgba(251, 191, 36, 0.06), transparent 20%),
-      linear-gradient(180deg, rgba(228,236,244,0.96), rgba(205,218,230,0.98));
+      radial-gradient(ellipse 120% 80% at 50% -10%, rgba(255, 255, 255, 0.14), transparent 42%),
+      radial-gradient(circle at 16% 18%, rgba(125, 211, 252, 0.07), transparent 26%),
+      radial-gradient(circle at 84% 14%, rgba(196, 181, 253, 0.06), transparent 22%),
+      linear-gradient(180deg, rgba(226, 232, 240, 0.97) 0%, rgba(214, 223, 234, 0.99) 45%, rgba(203, 213, 225, 0.88) 100%),
+      linear-gradient(180deg, transparent 0%, rgba(15, 23, 42, 0.04) 100%);
+    background-color: #e2e8f0;
   }
 }
 

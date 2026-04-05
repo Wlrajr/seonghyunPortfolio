@@ -205,11 +205,11 @@ export function Background3D() {
         ))}
       </div>
       <div
-        className="absolute left-[12vw] top-[22vh] h-[22rem] w-[38rem] rounded-full animate-drift-fast bg-[radial-gradient(circle,rgba(255,255,255,0.16)_0%,rgba(125,211,252,0.1)_28%,rgba(59,130,246,0.03)_56%,transparent_74%)] blur-3xl"
+        className="absolute left-[12vw] top-[22vh] h-[22rem] w-[38rem] rounded-full animate-drift-fast bg-[radial-gradient(circle,rgba(255,255,255,0.09)_0%,rgba(125,211,252,0.08)_28%,rgba(59,130,246,0.03)_56%,transparent_74%)] blur-3xl"
         aria-hidden
       />
       <div
-        className="absolute left-1/2 top-[10vh] h-[30rem] w-[74rem] max-w-[130vw] -translate-x-1/2 rounded-full animate-drift-fast bg-[radial-gradient(circle,rgba(255,255,255,0.2)_0%,rgba(125,211,252,0.12)_24%,rgba(14,165,233,0.04)_46%,transparent_74%)] blur-3xl"
+        className="absolute left-1/2 top-[10vh] h-[30rem] w-[74rem] max-w-[130vw] -translate-x-1/2 rounded-full animate-drift-fast bg-[radial-gradient(circle,rgba(255,255,255,0.1)_0%,rgba(125,211,252,0.1)_24%,rgba(14,165,233,0.035)_46%,transparent_74%)] blur-3xl"
         style={{ animationDelay: "-2s" }}
         aria-hidden
       />
@@ -226,11 +226,11 @@ export function Background3D() {
       <canvas ref={canvasRef} className="absolute inset-0 h-full w-full" aria-hidden />
       <CodeOverlay />
       <div
-        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(255,255,255,0.03)_0%,rgba(255,255,255,0.01)_26%,rgba(173,216,255,0.05)_72%,rgba(201,229,255,0.1)_100%)]"
+        className="absolute inset-0 bg-[linear-gradient(180deg,rgba(241,245,249,0.35)_0%,rgba(226,232,240,0.12)_40%,rgba(203,213,225,0.08)_100%)]"
         aria-hidden
       />
       <div
-        className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_44%,rgba(147,197,253,0.05)_76%,rgba(125,211,252,0.09)_100%)]"
+        className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,transparent_50%,rgba(148,163,184,0.06)_88%,rgba(100,116,139,0.08)_100%)]"
         aria-hidden
       />
     </div>

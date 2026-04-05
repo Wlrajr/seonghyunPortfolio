@@ -341,7 +341,7 @@ function TroubleshootingAccordion({ items }: { items: TroubleItem[] }) {
               <StepBlock emoji="🔵" label="해결" borderClass="border-blue-500">
                 <TroubleList lines={item.solution} />
               </StepBlock>
-              <StepBlock emoji="🟢" label="결과" borderClass="border-emerald-500">
+              <StepBlock emoji="🟢" label="결과" borderClass="border-sky-500">
                 <TroubleList lines={item.result} />
               </StepBlock>
             </div>
@@ -786,20 +786,20 @@ export function ProjectDetailView({ project }: { project: Project }) {
                     {isLms ? (
                       <div className="mt-10 grid gap-8 border-t border-blue-100/80 pt-10 md:grid-cols-2">
                         <div className="md:border-r md:border-blue-100/80 md:pr-8">
-                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-900 md:text-base">
+                          <ul className="space-y-3 text-sm leading-relaxed text-[#475569] md:text-base">
                             {resultsLmsLeft.map((t) => (
                               <li key={t} className="flex gap-2">
-                                <span className="shrink-0 text-emerald-700">✓</span>
+                                <span className="shrink-0 text-sky-600">✓</span>
                                 <span>{t}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
                         <div className="md:pl-8">
-                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-900 md:text-base">
+                          <ul className="space-y-3 text-sm leading-relaxed text-[#475569] md:text-base">
                             {resultsLmsRight.map((t) => (
                               <li key={t} className="flex gap-2">
-                                <span className="shrink-0 text-emerald-700">✓</span>
+                                <span className="shrink-0 text-sky-600">✓</span>
                                 <span>{t}</span>
                               </li>
                             ))}
@@ -809,20 +809,20 @@ export function ProjectDetailView({ project }: { project: Project }) {
                     ) : (
                       <div className="mt-10 grid gap-8 border-t border-blue-100/80 pt-10 md:grid-cols-2">
                         <div className="md:border-r md:border-blue-100/80 md:pr-8">
-                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-900 md:text-base">
+                          <ul className="space-y-3 text-sm leading-relaxed text-[#475569] md:text-base">
                             {resultsErpLeft.map((t) => (
                               <li key={t} className="flex gap-2">
-                                <span className="shrink-0 text-emerald-700">✓</span>
+                                <span className="shrink-0 text-sky-600">✓</span>
                                 <span>{t}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
                         <div className="md:pl-8">
-                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-900 md:text-base">
+                          <ul className="space-y-3 text-sm leading-relaxed text-[#475569] md:text-base">
                             {resultsErpRight.map((t) => (
                               <li key={t} className="flex gap-2">
-                                <span className="shrink-0 text-emerald-700">✓</span>
+                                <span className="shrink-0 text-sky-600">✓</span>
                                 <span>{t}</span>
                               </li>
                             ))}
@@ -831,19 +831,19 @@ export function ProjectDetailView({ project }: { project: Project }) {
                       </div>
                     )}
                     {isLms ? (
-                      <ul className="mt-8 grid gap-2 border-t border-blue-100/80 pt-8 text-sm leading-relaxed text-emerald-900 md:grid-cols-2 md:text-base">
+                      <ul className="mt-8 grid gap-2 border-t border-blue-100/80 pt-8 text-sm leading-relaxed text-[#475569] md:grid-cols-2 md:text-base">
                         {resultsLmsWide.map((t) => (
                           <li key={t} className="flex gap-2">
-                            <span className="shrink-0 text-emerald-700">✓</span>
+                            <span className="shrink-0 text-sky-600">✓</span>
                             <span>{t}</span>
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <ul className="mt-8 grid gap-2 border-t border-blue-100/80 pt-8 text-sm leading-relaxed text-emerald-900 md:grid-cols-2 md:text-base">
+                      <ul className="mt-8 grid gap-2 border-t border-blue-100/80 pt-8 text-sm leading-relaxed text-[#475569] md:grid-cols-2 md:text-base">
                         {resultsErpWide.map((t) => (
                           <li key={t} className="flex gap-2">
-                            <span className="shrink-0 text-emerald-700">✓</span>
+                            <span className="shrink-0 text-sky-600">✓</span>
                             <span>{t}</span>
                           </li>
                         ))}
@@ -883,7 +883,7 @@ export function ProjectDetailView({ project }: { project: Project }) {
                         href={lmsyncDocsFolderUrl}
                         title="문서 (Google Drive)"
                         icon={FileSpreadsheet}
-                        iconClass="bg-emerald-50 text-emerald-800"
+                        iconClass="bg-sky-50 text-sky-800"
                       />
                     ) : null}
                     <LinkCard
