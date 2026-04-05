@@ -5,7 +5,7 @@ import './globals.css'
 
 const notoSansKr = Noto_Sans_KR({
   subsets: ['latin'],
-  weight: ['400', '500', '700'],
+  weight: ['400', '500', '600', '700'],
   variable: '--font-noto-sans-kr',
 })
 
@@ -34,13 +34,12 @@ function siteMetadataBase(): URL {
 }
 
 const metadataBase = siteMetadataBase()
-/** 스크래퍼 호환을 위해 OG·Twitter 이미지는 항상 절대 URL */
-const siteUrl = metadataBase.origin
-const ogImageUrl = `${siteUrl}/og-image.png`
+/** Twitter 등 일부 스크래퍼는 절대 URL을 기대할 수 있음 */
+const ogImageAbsoluteUrl = new URL('/og-image.png', metadataBase).toString()
 
 /** 링크 미리보기(OG) — `public/og-image.png` (1200×630) */
 const ogImage = {
-  url: ogImageUrl,
+  url: '/og-image.png',
   width: 1200,
   height: 630,
   type: 'image/png',
@@ -63,7 +62,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     title: '최성현 포트폴리오',
     description: '신입 풀스택 개발자 최성현의 포트폴리오입니다.',
-    images: [ogImageUrl],
+    images: [ogImageAbsoluteUrl],
   },
 }
 

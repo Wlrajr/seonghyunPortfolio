@@ -22,7 +22,7 @@ export function SectionScrollRail({
         <nav aria-label="페이지 섹션">
           <div className="relative pl-0.5">
             <div
-              className="absolute left-[11px] top-1 bottom-1 w-[3px] rounded-full bg-gradient-to-b from-sky-300/90 via-slate-200 to-slate-200/90"
+              className="absolute left-[11px] top-1 bottom-1 w-[3px] rounded-full bg-gradient-to-b from-sky-400/95 via-slate-300/90 to-slate-200/95"
               aria-hidden
             />
             <ul className="space-y-1">
@@ -37,8 +37,8 @@ export function SectionScrollRail({
                       <span
                         className={`relative z-10 flex h-9 w-9 shrink-0 items-center justify-center rounded-full border-2 text-[11px] font-bold transition ${
                           active
-                            ? "border-sky-600 bg-sky-500 text-white"
-                            : "border-slate-200 bg-transparent text-slate-400 group-hover:border-sky-400 group-hover:text-sky-700"
+                            ? "border-sky-800 bg-sky-700 text-white shadow-[0_1px_3px_rgba(15,23,42,0.25)]"
+                            : "border-slate-300 bg-transparent text-text-subtle group-hover:border-sky-500 group-hover:text-sky-900"
                         }`}
                         aria-hidden
                       >
@@ -47,8 +47,8 @@ export function SectionScrollRail({
                       <span
                         className={`min-w-0 text-[15px] leading-snug tracking-[-0.02em] xl:text-base ${
                           active
-                            ? "font-semibold text-slate-900"
-                            : "font-medium text-slate-600 group-hover:text-slate-900"
+                            ? "font-bold text-text-heading text-shadow-crisp"
+                            : "font-medium text-text-muted group-hover:text-text-heading"
                         }`}
                       >
                         {label}

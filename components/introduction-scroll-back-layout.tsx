@@ -13,7 +13,7 @@ import { SectionScrollRail, type SectionNavItem } from "@/components/section-scr
 import { activeSectionIdForScroll, cn } from "@/lib/utils"
 
 const floatingBackClass =
-  `fixed left-[max(1rem,env(safe-area-inset-left))] ${detailFloatingBackTopClass} z-[45] inline-flex max-w-[calc(100vw-2.5rem)] items-center gap-2 rounded-full border border-slate-200/70 bg-white/55 px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-xl transition-[opacity,transform] duration-200 hover:border-sky-300/80 hover:bg-white/80 hover:text-sky-900`
+  `fixed left-[max(1rem,env(safe-area-inset-left))] ${detailFloatingBackTopClass} z-[45] inline-flex max-w-[calc(100vw-2.5rem)] items-center gap-2 rounded-full border border-slate-200/70 bg-white/88 px-3.5 py-2 text-sm font-medium text-text-body shadow-sm backdrop-blur-xl transition-[opacity,transform] duration-200 hover:border-sky-300/80 hover:bg-white/95 hover:text-sky-900`
 
 export function IntroductionScrollBackLayout({
   title,

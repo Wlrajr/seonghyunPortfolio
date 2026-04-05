@@ -21,7 +21,7 @@ import { SectionScrollRail } from "@/components/section-scroll-rail"
 import { SectionDivider } from "@/components/section-divider"
 import { TechStackShowcase } from "@/components/tech-stack-showcase"
 import { projects } from "@/lib/projects"
-import { activeSectionIdForScroll } from "@/lib/utils"
+import { activeSectionIdForScroll, cn } from "@/lib/utils"
 import {
   educationHistory,
   introductionPreview,
@@ -44,9 +44,20 @@ const profile = {
 }
 
 const navTopLinkClass =
-  "shrink-0 text-sm font-medium text-slate-600 transition-colors hover:text-sky-800 md:text-[15px]"
+  "shrink-0 text-sm font-medium text-text-muted transition-colors hover:text-sky-900 md:text-[15px]"
 
 const MotionLink = motion.create(Link)
+
+/** Cover Letter 섹션 요약 하단 키워드 */
+const coverLetterKeywordTags = [
+  "도전적",
+  "책임감",
+  "풀스택",
+  "Java/Spring",
+  "사용자 경험",
+  "구조 설계",
+  "성장 지향",
+] as const
 
 const sectionRailNav: { id: string; label: string }[] = [
   { id: "about", label: "About" },
@@ -66,7 +77,7 @@ const sectionInner = "mx-auto w-full max-w-[1040px]"
 const sectionY =
   "scroll-mt-[4.75rem] px-4 py-14 sm:scroll-mt-[5.25rem] sm:px-5 sm:py-20 md:scroll-mt-24 md:px-8 md:py-24 lg:px-10 lg:py-28"
 const sectionLineClass =
-  "mx-auto mt-4 h-px max-w-md bg-gradient-to-r from-transparent via-sky-600/70 to-cyan-500/40 to-transparent"
+  "mx-auto mt-4 h-px max-w-md bg-gradient-to-r from-transparent via-sky-700/80 to-cyan-600/50 to-transparent"
 
 const timelineRailClass =
   "pointer-events-none absolute bottom-0 right-3 top-0 hidden w-px translate-x-1/2 bg-slate-200 sm:right-5 sm:block md:right-8 lg:right-10 xl:right-12"
@@ -89,14 +100,14 @@ const resumeTimelineDotClass =
   "absolute left-3 top-6 z-10 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-white bg-gradient-to-br from-sky-500 to-violet-600 shadow-[0_0_0_3px_rgba(125,211,252,0.28)] sm:left-4 sm:top-7 sm:h-3.5 sm:w-3.5 sm:shadow-[0_0_0_4px_rgba(125,211,252,0.28)] md:left-5 md:top-8"
 
 const resumeTimelineCardClass =
-  "rounded-xl border border-slate-200/65 bg-white/55 p-4 shadow-sm ring-1 ring-sky-100/35 backdrop-blur-md sm:rounded-2xl sm:p-5 md:p-6"
+  "rounded-xl border border-slate-200/70 bg-white/88 p-4 shadow-sm ring-1 ring-sky-100/45 backdrop-blur-md sm:rounded-2xl sm:p-5 md:p-6"
 
 const resumeTypeBadgeClass =
-  "mt-2 inline-flex items-center rounded-full bg-gradient-to-r from-sky-500/12 via-violet-500/10 to-sky-500/8 px-3 py-1 text-xs font-semibold tracking-wide text-sky-900 ring-1 ring-sky-200/45"
+  "mt-2 inline-flex items-center rounded-full bg-gradient-to-r from-sky-600/18 via-violet-600/14 to-sky-600/12 px-3 py-1 text-xs font-semibold tracking-wide text-sky-950 ring-1 ring-sky-300/55"
 
 function SectionTitle({ children }: { children: ReactNode }) {
   return (
-    <h2 className="font-display text-xl font-semibold leading-snug tracking-[-0.04em] text-slate-900 sm:text-2xl md:text-[clamp(1.5rem,2.8vw,2rem)] md:leading-tight">
+    <h2 className="font-display text-xl font-bold leading-snug tracking-[-0.04em] text-text-heading text-shadow-crisp sm:text-2xl md:text-[clamp(1.5rem,2.8vw,2rem)] md:leading-tight">
       {children}
     </h2>
   )
@@ -150,7 +161,7 @@ export default function HomePage() {
           <motion.div whileHover={{ opacity: 0.92 }} whileTap={{ scale: 0.99 }} className="min-w-0 shrink">
             <Link
               href="/"
-              className="inline-flex min-w-0 flex-wrap items-baseline gap-x-0 gap-y-0.5 rounded-lg font-display text-sm font-semibold tracking-[-0.03em] text-slate-900 outline-none ring-sky-400/0 transition focus-visible:ring-2 focus-visible:ring-sky-500/80 sm:text-base md:text-lg"
+              className="inline-flex min-w-0 flex-wrap items-baseline gap-x-0 gap-y-0.5 rounded-lg font-display text-sm font-semibold tracking-[-0.03em] text-text-heading outline-none ring-sky-400/0 transition focus-visible:ring-2 focus-visible:ring-sky-500/80 sm:text-base md:text-lg"
               onClick={(e) => {
                 e.preventDefault()
                 setMobileNavOpen(false)
@@ -162,7 +173,7 @@ export default function HomePage() {
               <span className="mx-1.5 text-slate-300 sm:mx-2" aria-hidden>
                 ·
               </span>
-              <span className="font-normal text-slate-500">Portfolio</span>
+              <span className="font-normal text-text-subtle">Portfolio</span>
             </Link>
           </motion.div>
           <div className="hidden items-center gap-5 lg:flex lg:gap-7">
@@ -176,7 +187,7 @@ export default function HomePage() {
           </div>
           <button
             type="button"
-            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200/90 bg-white/70 text-slate-800 shadow-sm backdrop-blur-md transition hover:border-sky-300/80 hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/70 lg:hidden"
+            className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200/90 bg-white/70 text-text-body shadow-sm backdrop-blur-md transition hover:border-sky-300/80 hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/70 lg:hidden"
             aria-expanded={mobileNavOpen}
             aria-controls="site-mobile-nav"
             aria-label={mobileNavOpen ? "메뉴 닫기" : "메뉴 열기"}
@@ -197,10 +208,10 @@ export default function HomePage() {
           />
           <div className="absolute right-0 top-0 flex h-full w-[min(100%,19rem)] flex-col border-l border-slate-200/90 bg-white/95 shadow-2xl backdrop-blur-xl supports-[backdrop-filter]:bg-white/90">
             <div className="flex items-center justify-between border-b border-slate-200/80 px-4 py-3">
-              <span className="font-display text-sm font-semibold text-slate-900">섹션 이동</span>
+              <span className="font-display text-sm font-semibold text-text-heading">섹션 이동</span>
               <button
                 type="button"
-                className="rounded-lg p-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+                className="rounded-lg p-2 text-text-muted transition hover:bg-slate-100 hover:text-text-heading"
                 aria-label="메뉴 닫기"
                 onClick={() => setMobileNavOpen(false)}
               >
@@ -212,7 +223,7 @@ export default function HomePage() {
                 <Link
                   key={id}
                   href={`#${id}`}
-                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium text-slate-800 transition hover:bg-gradient-to-r hover:from-sky-50 hover:to-violet-50 hover:text-sky-900"
+                  className="rounded-xl px-4 py-3.5 text-[15px] font-medium text-text-body transition hover:bg-gradient-to-r hover:from-sky-50 hover:to-violet-50 hover:text-sky-900"
                   onClick={() => setMobileNavOpen(false)}
                 >
                   {label}
@@ -242,7 +253,7 @@ export default function HomePage() {
                 hidden: { opacity: 0, y: 16 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
               }}
-              className="mb-4 font-mono text-[10px] font-medium uppercase tracking-[0.28em] text-sky-700 sm:mb-5 sm:text-[11px] sm:tracking-[0.32em] md:mb-6 md:text-xs"
+              className="mb-4 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6366f1] sm:mb-5 sm:text-[11px] sm:tracking-[0.32em] md:mb-6 md:text-xs"
             >
               {profile.role}
             </motion.p>
@@ -251,22 +262,24 @@ export default function HomePage() {
                 hidden: { opacity: 0, y: 28 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
               }}
-              className="font-display mx-auto max-w-[min(100%,40rem)] text-[clamp(1.55rem,6.2vw,3.5rem)] font-semibold leading-[1.12] tracking-[-0.04em] sm:leading-[1.08] md:max-w-5xl md:leading-[1.06]"
+              lang="ko"
+              className="font-display mx-auto max-w-[min(100%,40rem)] text-[clamp(1.55rem,6.2vw,3.5rem)] font-semibold leading-[1.12] tracking-[-0.04em] break-keep sm:leading-[1.08] md:max-w-5xl md:leading-[1.06]"
             >
-              <span className="text-slate-700">사용자 경험과 안정감을 함께 보는 </span>
-              <span className="bg-gradient-to-r from-sky-700 via-cyan-600 to-indigo-600 bg-clip-text text-transparent">
-                풀스택
+              <span className="text-[#1e293b]">
+                사용자 경험과 안정감을 함께 보는{" "}
               </span>
-              <span className="text-slate-700"> 개발자</span>
+              <span className="inline-block whitespace-nowrap text-[#2563eb] sm:inline">
+                풀스택 개발자
+              </span>
               <br />
-              <span className="text-slate-900">구조를 지키고, 확장 가능하게 만듭니다.</span>
+              <span className="text-[#1e293b]">구조를 지키고, 확장 가능하게 만듭니다.</span>
             </motion.h1>
             <motion.p
               variants={{
                 hidden: { opacity: 0, y: 18 },
                 show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
               }}
-              className="mx-auto mt-6 max-w-xl px-0.5 text-[15px] leading-[1.75] text-slate-600 sm:mt-8 sm:text-base md:mt-10 md:text-lg"
+              className="mx-auto mt-6 max-w-xl px-0.5 text-[15px] font-normal leading-[1.75] text-[#475569] sm:mt-8 sm:text-base md:mt-10 md:text-lg"
             >
               {profile.bio}
             </motion.p>
@@ -281,22 +294,22 @@ export default function HomePage() {
               <Link
                 href={profile.links.github}
                 target="_blank"
-                className="group inline-flex items-center justify-center gap-2 rounded-xl py-2 text-sm font-medium text-slate-700 sm:justify-start sm:py-0 md:text-[15px]"
+                className="group inline-flex items-center justify-center gap-2 rounded-xl py-2 text-sm font-normal text-[#4F6EF7] transition hover:text-[#3b5bdb] sm:justify-start sm:py-0 md:text-[15px]"
               >
-                <Github className="h-4 w-4 text-slate-400 transition group-hover:text-sky-700" />
+                <Github className="h-4 w-4 text-[#4F6EF7] transition group-hover:text-[#3b5bdb]" />
                 <span className="relative">
                   GitHub
-                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-sky-600 to-cyan-500 transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-[#4F6EF7] to-[#6366f1] transition-all duration-300 group-hover:w-full" />
                 </span>
               </Link>
               <Link
                 href={`mailto:${profile.links.email}`}
-                className="group inline-flex items-center justify-center gap-2 rounded-xl py-2 text-sm font-medium text-slate-700 sm:justify-start sm:py-0 md:text-[15px]"
+                className="group inline-flex items-center justify-center gap-2 rounded-xl py-2 text-sm font-normal text-[#4F6EF7] transition hover:text-[#3b5bdb] sm:justify-start sm:py-0 md:text-[15px]"
               >
-                <Mail className="h-4 w-4 text-slate-400 transition group-hover:text-sky-700" />
+                <Mail className="h-4 w-4 text-[#4F6EF7] transition group-hover:text-[#3b5bdb]" />
                 <span className="relative">
                   Email
-                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-sky-600 to-cyan-500 transition-all duration-300 group-hover:w-full" />
+                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-[#4F6EF7] to-[#6366f1] transition-all duration-300 group-hover:w-full" />
                 </span>
               </Link>
             </motion.div>
@@ -310,9 +323,9 @@ export default function HomePage() {
           transition={{ delay: 0.85, duration: 0.5 }}
         >
           <div className="flex flex-col items-center gap-2">
-            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-slate-500">Scroll</span>
+            <span className="font-mono text-[10px] uppercase tracking-[0.4em] text-text-subtle">Scroll</span>
             <motion.div animate={{ y: [0, 5, 0] }} transition={{ duration: 1.5, repeat: Infinity, ease: "easeInOut" }}>
-              <ArrowDown className="h-4 w-4 text-slate-500" />
+              <ArrowDown className="h-4 w-4 text-text-subtle" />
             </motion.div>
           </div>
         </motion.div>
@@ -349,28 +362,28 @@ export default function HomePage() {
                 </div>
               </motion.div>
               <div className="min-w-0 pt-0.5 md:text-left">
-                <h3 className="font-display text-xl font-semibold tracking-[-0.03em] text-slate-900 sm:text-2xl">{profile.name}</h3>
-                <ul className="mt-5 space-y-3.5 text-left text-[14px] leading-relaxed text-slate-700 sm:mt-6 sm:space-y-3.5 sm:text-[15px] sm:leading-relaxed md:text-base">
+                <h3 className="font-display text-xl font-bold tracking-[-0.03em] text-text-heading sm:text-2xl">{profile.name}</h3>
+                <ul className="mt-5 space-y-3.5 text-left text-[14px] leading-relaxed text-text-body sm:mt-6 sm:space-y-3.5 sm:text-[15px] sm:leading-relaxed md:text-base">
                   <li className="flex justify-start gap-2.5 sm:gap-3 md:justify-start">
-                    <Mail className="mt-0.5 h-[18px] w-[18px] shrink-0 text-sky-600 sm:h-5 sm:w-5" aria-hidden />
+                    <Mail className="mt-0.5 h-[18px] w-[18px] shrink-0 text-sky-800 sm:h-5 sm:w-5" aria-hidden />
                     <a
                       href={`mailto:${profile.links.email}`}
-                      className="min-w-0 break-all text-slate-800 underline decoration-slate-300 underline-offset-4 transition hover:text-sky-800 hover:decoration-sky-400 sm:break-normal"
+                      className="min-w-0 break-all text-text-body underline decoration-slate-300 underline-offset-4 transition hover:text-sky-900 hover:decoration-sky-400 sm:break-normal"
                     >
                       {profile.links.email}
                     </a>
                   </li>
                   <li className="flex justify-start gap-2.5 sm:gap-3 md:justify-start">
-                    <Home className="mt-0.5 h-[18px] w-[18px] shrink-0 text-sky-600 sm:h-5 sm:w-5" aria-hidden />
+                    <Home className="mt-0.5 h-[18px] w-[18px] shrink-0 text-sky-800 sm:h-5 sm:w-5" aria-hidden />
                     <span className="break-words">{profile.address}</span>
                   </li>
                   <li className="flex justify-start gap-2.5 sm:gap-3 md:justify-start">
-                    <Calendar className="mt-0.5 h-[18px] w-[18px] shrink-0 text-sky-600 sm:h-5 sm:w-5" aria-hidden />
+                    <Calendar className="mt-0.5 h-[18px] w-[18px] shrink-0 text-sky-800 sm:h-5 sm:w-5" aria-hidden />
                     <span>{profile.birthDateLabel}</span>
                   </li>
                   <li className="flex justify-start gap-2.5 sm:gap-3 md:justify-start">
-                    <Phone className="mt-0.5 h-[18px] w-[18px] shrink-0 text-sky-600 sm:h-5 sm:w-5" aria-hidden />
-                    <a href={`tel:${profile.phone.replace(/-/g, "")}`} className="text-slate-800 underline decoration-slate-300 underline-offset-4 transition hover:text-sky-800 hover:decoration-sky-400">
+                    <Phone className="mt-0.5 h-[18px] w-[18px] shrink-0 text-sky-800 sm:h-5 sm:w-5" aria-hidden />
+                    <a href={`tel:${profile.phone.replace(/-/g, "")}`} className="text-text-body underline decoration-slate-300 underline-offset-4 transition hover:text-sky-900 hover:decoration-sky-400">
                       {profile.phone}
                     </a>
                   </li>
@@ -408,7 +421,7 @@ export default function HomePage() {
           <Reveal className="text-center">
             <SectionTitle>Projects</SectionTitle>
             <div className={sectionLineClass} />
-            <p className="mt-4 font-mono text-sm text-slate-500">총 {projects.length}개</p>
+            <p className="mt-4 font-mono text-sm text-text-subtle">총 {projects.length}개</p>
           </Reveal>
 
           <div className="mx-auto mt-10 max-w-3xl space-y-10 md:mt-12 md:space-y-12">
@@ -421,7 +434,7 @@ export default function HomePage() {
                   <motion.article
                     whileHover={{ y: -4 }}
                     transition={{ type: "spring", stiffness: 380, damping: 28 }}
-                    className="mx-auto w-full overflow-hidden rounded-xl border border-slate-200/90 bg-white/75 shadow-sm ring-1 ring-slate-100/80 backdrop-blur-sm"
+                    className="mx-auto w-full overflow-hidden rounded-xl border border-slate-200/90 bg-white/90 shadow-sm ring-1 ring-slate-100/85 backdrop-blur-sm"
                   >
                     <div className="flex flex-col">
                       <Link
@@ -440,19 +453,19 @@ export default function HomePage() {
                       </Link>
 
                       <div className="flex flex-col px-5 py-4 text-center sm:px-6 sm:py-4 md:text-left">
-                        <p className="font-mono text-xs font-medium tracking-widest text-slate-400 sm:text-sm">
+                        <p className="font-mono text-xs font-medium tracking-widest text-text-subtle sm:text-sm">
                           Project {project.id}
                         </p>
-                        <h3 className="font-display mt-2 text-lg font-semibold tracking-[-0.03em] text-slate-900 sm:text-xl">
+                        <h3 className="font-display mt-2 text-lg font-bold tracking-[-0.03em] text-text-heading sm:text-xl">
                           {cardHeading}
                         </h3>
-                        <p className="mt-3 text-[15px] leading-snug text-slate-600 sm:text-[16px] sm:leading-relaxed">
+                        <p className="mt-3 text-[15px] leading-snug text-text-muted sm:text-[16px] sm:leading-relaxed">
                           {project.summary}
                         </p>
 
                         <div className="mt-4">
-                          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-slate-400">Architecture</p>
-                          <p className="mt-1.5 font-mono text-xs leading-relaxed text-slate-700 sm:text-sm">{archLine}</p>
+                          <p className="text-[10px] font-semibold uppercase tracking-[0.2em] text-text-subtle">Architecture</p>
+                          <p className="mt-1.5 font-mono text-xs leading-relaxed text-text-body sm:text-sm">{archLine}</p>
                         </div>
 
                         <div className="mt-4 flex w-full flex-col gap-2 sm:flex-row sm:flex-wrap sm:justify-center md:justify-start">
@@ -467,7 +480,7 @@ export default function HomePage() {
                             href={project.presentationUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-slate-800 transition hover:border-sky-400 hover:text-sky-800 sm:w-auto sm:py-2"
+                            className="inline-flex w-full items-center justify-center gap-2 rounded-full border border-slate-300 bg-white px-4 py-2.5 text-sm font-semibold text-text-body transition hover:border-sky-400 hover:text-sky-900 sm:w-auto sm:py-2"
                           >
                             발표 자료 (PPT)
                             <ArrowUpRight className="h-4 w-4" />
@@ -498,7 +511,7 @@ export default function HomePage() {
 
           {workHistory.length === 0 ? (
             <Reveal>
-              <p className="mx-auto mt-12 max-w-xl text-center text-[18px] leading-relaxed text-slate-600">
+              <p className="mx-auto mt-12 max-w-xl text-center text-[18px] leading-relaxed text-text-muted">
                 직장 경력은 아직 없습니다. 교육과 프로젝트 섹션에서 준비 과정을 확인하실 수 있습니다.
               </p>
             </Reveal>
@@ -519,19 +532,19 @@ export default function HomePage() {
                         transition={{ type: "spring", stiffness: 400, damping: 24 }}
                         className={resumeTimelineCardClass}
                       >
-                        <p className="font-mono text-[13px] font-medium tracking-wide text-slate-500 md:text-sm">
+                        <p className="font-mono text-[13px] font-medium tracking-wide text-text-subtle md:text-sm">
                           {row.period}
                         </p>
-                        <h3 className="mt-1.5 font-display text-lg font-semibold tracking-[-0.03em] text-slate-900 md:text-xl">
+                        <h3 className="mt-1.5 font-display text-lg font-semibold tracking-[-0.03em] text-text-heading md:text-xl">
                           {row.company}
                         </h3>
                         <span className={resumeTypeBadgeClass}>{row.position}</span>
                         {row.detail ? (
                           <div className="mt-4 border-t border-slate-200/60 pt-4">
-                            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-violet-600/90">
+                            <p className="mb-2 text-xs font-semibold uppercase tracking-wider text-violet-800">
                               업무 내용
                             </p>
-                            <ul className="list-none space-y-2 text-[15px] leading-relaxed text-slate-600 md:text-base">
+                            <ul className="list-none space-y-2 text-[15px] leading-relaxed text-text-muted md:text-base">
                               {splitDetailLines(row.detail).map((line) => (
                                 <li key={line} className="flex gap-2.5">
                                   <span
@@ -582,17 +595,17 @@ export default function HomePage() {
                       transition={{ type: "spring", stiffness: 400, damping: 24 }}
                       className={resumeTimelineCardClass}
                     >
-                      <p className="font-mono text-[13px] font-medium tracking-wide text-slate-500 md:text-sm">
+                      <p className="font-mono text-[13px] font-medium tracking-wide text-text-subtle md:text-sm">
                         {row.period}
                       </p>
-                      <h3 className="mt-1.5 font-display text-lg font-semibold tracking-[-0.03em] text-slate-900 md:text-xl">
+                      <h3 className="mt-1.5 font-display text-lg font-semibold tracking-[-0.03em] text-text-heading md:text-xl">
                         {row.school}
                       </h3>
-                      <p className="mt-3 bg-gradient-to-r from-sky-700 via-violet-600 to-sky-700 bg-clip-text text-[15px] font-medium leading-snug text-transparent md:text-base">
+                      <p className="mt-3 bg-gradient-to-r from-sky-800 via-violet-800 to-sky-800 bg-clip-text text-[15px] font-semibold leading-snug text-transparent md:text-base">
                         {row.major}
                       </p>
                       {row.detail ? (
-                        <p className="mt-4 border-t border-slate-200/60 pt-4 text-[15px] leading-relaxed text-slate-600 md:text-base">
+                        <p className="mt-4 border-t border-slate-200/60 pt-4 text-[15px] leading-relaxed text-text-muted md:text-base">
                           {row.detail}
                         </p>
                       ) : null}
@@ -625,15 +638,30 @@ export default function HomePage() {
                   transition={{ type: "spring", stiffness: 400, damping: 26 }}
                   className="flex h-full flex-col items-center gap-5 rounded-2xl border border-slate-200/90 bg-white/80 p-6 text-center shadow-sm ring-1 ring-slate-100/80 backdrop-blur-sm md:p-8"
                 >
-                  <div className="flex h-14 w-14 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br from-sky-100 to-cyan-50 text-lg font-bold text-sky-700 ring-1 ring-sky-200/60">
-                    {row.organization.slice(0, 1)}
+                  <div
+                    className={`relative flex h-14 w-14 shrink-0 items-center justify-center overflow-hidden rounded-xl ring-1 ring-slate-200/70 ${
+                      row.logoSrc ? "bg-white" : "bg-gradient-to-br from-sky-100 to-cyan-50 text-lg font-bold text-sky-950 ring-sky-300/70"
+                    }`}
+                  >
+                    {row.logoSrc ? (
+                      <Image
+                        src={row.logoSrc}
+                        alt=""
+                        width={56}
+                        height={56}
+                        className="object-contain p-1.5"
+                        sizes="56px"
+                      />
+                    ) : (
+                      row.organization.slice(0, 1)
+                    )}
                   </div>
                   <div className="mx-auto min-w-0 w-full max-w-md">
-                    <h3 className="font-display text-lg font-semibold tracking-[-0.02em] text-slate-900">{row.organization}</h3>
-                    <p className="mt-2 text-[15px] leading-snug text-slate-600">{row.course}</p>
-                    <p className="mt-4 font-mono text-sm text-slate-500">{row.period}</p>
+                    <h3 className="font-display text-lg font-semibold tracking-[-0.02em] text-text-heading">{row.organization}</h3>
+                    <p className="mt-2 text-[15px] leading-snug text-text-muted">{row.course}</p>
+                    <p className="mt-4 font-mono text-sm text-text-subtle">{row.period}</p>
                     {row.detail ? (
-                      <p className="mt-3 text-[15px] leading-relaxed text-slate-600 sm:text-[16px] md:text-[17px]">{row.detail}</p>
+                      <p className="mt-3 text-[15px] leading-relaxed text-text-muted sm:text-[16px] md:text-[17px]">{row.detail}</p>
                     ) : null}
                   </div>
                 </motion.div>
@@ -655,21 +683,41 @@ export default function HomePage() {
               <div className={sectionLineClass} />
             </div>
             <div className="mx-auto mt-8 max-w-2xl sm:mt-10 md:mt-14">
-              <p className="text-center text-[15px] leading-[1.75] text-slate-600 sm:text-[17px] sm:leading-[1.8] md:text-lg">
+              <p className="text-center text-[15px] leading-[1.75] text-text-muted sm:text-[17px] sm:leading-[1.8] md:text-lg">
                 {introductionPreview}
               </p>
+              <ul
+                className="mt-6 flex list-none flex-wrap justify-center gap-2 p-0"
+                role="list"
+                aria-label="자기소개 키워드"
+              >
+                {coverLetterKeywordTags.map((tag, i) => (
+                  <li key={tag}>
+                    <span
+                      className={cn(
+                        "inline-block rounded-full px-4 py-1.5 text-sm font-medium",
+                        i % 2 === 0
+                          ? "border border-sky-400/55 bg-sky-500/[0.14] text-sky-900"
+                          : "border border-violet-400/55 bg-violet-500/[0.14] text-violet-900",
+                      )}
+                    >
+                      {tag}
+                    </span>
+                  </li>
+                ))}
+              </ul>
               <div className="mt-8 flex justify-center sm:mt-10">
               <MotionLink
                 href="/introduction"
-                className="group inline-flex items-center gap-2 text-sm font-semibold text-slate-900 sm:gap-3 sm:text-base"
+                className="group inline-flex items-center gap-2 text-sm font-semibold text-text-heading sm:gap-3 sm:text-base"
                 whileHover={{ x: 6 }}
                 transition={{ type: "spring", stiffness: 300, damping: 22 }}
               >
                 <span className="relative">
                   전체 자기소개 보러가기
-                  <span className="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-100 bg-gradient-to-r from-sky-600 to-cyan-500 transition-transform duration-300 group-hover:scale-x-110" />
+                  <span className="absolute -bottom-1 left-0 h-0.5 w-full origin-left scale-x-100 bg-gradient-to-r from-sky-700 to-cyan-600 transition-transform duration-300 group-hover:scale-x-110" />
                 </span>
-                <ArrowUpRight className="h-5 w-5 text-sky-700 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
+                <ArrowUpRight className="h-5 w-5 text-sky-900 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
               </MotionLink>
               </div>
             </div>
@@ -685,35 +733,35 @@ export default function HomePage() {
         <div className={sectionInnerTimeline}>
           <Reveal>
             <div className="text-center">
-              <h2 className="font-display mx-auto max-w-2xl text-lg font-light leading-snug tracking-[-0.04em] text-slate-900 sm:text-xl md:text-[clamp(1.35rem,3.2vw,2rem)] md:leading-tight">
+              <h2 className="font-display mx-auto max-w-2xl text-lg font-medium leading-snug tracking-[-0.04em] text-text-heading text-shadow-crisp sm:text-xl md:text-[clamp(1.35rem,3.2vw,2rem)] md:leading-tight">
                 함께 이야기를 나누고 싶다면
                 <br />
-                <span className="font-semibold">편하게 연락 주세요</span>
+                <span className="font-bold">편하게 연락 주세요</span>
               </h2>
               <div className={sectionLineClass} />
             </div>
             <div className="mt-8 flex w-full max-w-lg flex-col items-center space-y-6 px-1 text-center sm:mt-10 sm:space-y-7 md:mt-12 md:max-w-none md:px-0">
               <Link
                 href={`mailto:${profile.links.email}`}
-                className="group inline-block max-w-full break-words px-1 font-display text-lg font-medium tracking-[-0.03em] text-slate-900 transition-colors hover:text-sky-700 sm:text-xl md:text-2xl lg:text-3xl"
+                className="group inline-block max-w-full break-words px-1 font-display text-lg font-medium tracking-[-0.03em] text-text-heading transition-colors hover:text-sky-900 sm:text-xl md:text-2xl lg:text-3xl"
               >
                 {profile.links.email}
-                <span className="mx-auto mt-2 block h-px max-w-xs origin-center scale-x-0 bg-gradient-to-r from-sky-600 to-cyan-500 transition-transform duration-300 group-hover:scale-x-100" />
+                <span className="mx-auto mt-2 block h-px max-w-xs origin-center scale-x-0 bg-gradient-to-r from-sky-700 to-cyan-600 transition-transform duration-300 group-hover:scale-x-100" />
               </Link>
               <a
                 href={`tel:${profile.phone.replace(/-/g, "")}`}
-                className="group flex max-w-full flex-col items-center font-display text-lg font-medium tracking-[-0.03em] text-slate-900 transition-colors hover:text-sky-700 sm:text-xl md:text-2xl lg:text-3xl"
+                className="group flex max-w-full flex-col items-center font-display text-lg font-medium tracking-[-0.03em] text-text-heading transition-colors hover:text-sky-900 sm:text-xl md:text-2xl lg:text-3xl"
               >
                 <span className="inline-flex flex-wrap items-center justify-center gap-2.5">
-                  <Phone className="h-5 w-5 shrink-0 text-sky-600 sm:h-6 sm:w-6 md:h-7 md:w-7" aria-hidden />
+                  <Phone className="h-5 w-5 shrink-0 text-sky-800 sm:h-6 sm:w-6 md:h-7 md:w-7" aria-hidden />
                   {profile.phone}
                 </span>
-                <span className="mt-2 block h-px max-w-xs origin-center scale-x-0 bg-gradient-to-r from-sky-600 to-cyan-500 transition-transform duration-300 group-hover:scale-x-100" />
+                <span className="mt-2 block h-px max-w-xs origin-center scale-x-0 bg-gradient-to-r from-sky-700 to-cyan-600 transition-transform duration-300 group-hover:scale-x-100" />
               </a>
               <Link
                 href={profile.links.github}
                 target="_blank"
-                className="group inline-flex max-w-full items-center gap-2 break-all text-sm text-slate-500 transition hover:text-slate-900 sm:text-base md:text-[17px]"
+                className="group inline-flex max-w-full items-center gap-2 break-all text-sm text-text-subtle transition hover:text-text-heading sm:text-base md:text-[17px]"
               >
                 {githubLabel}
                 <ArrowUpRight className="h-4 w-4 opacity-0 transition group-hover:opacity-100" />
@@ -725,11 +773,11 @@ export default function HomePage() {
 
       <footer className="border-t border-slate-300/80 px-4 py-7 sm:px-6 sm:py-8 md:px-10 md:py-10 lg:px-12">
         <Reveal y={10}>
-          <div className={`${sectionInner} flex flex-col items-center justify-center gap-2 text-center text-xs text-slate-500 sm:gap-3 sm:text-sm md:flex-row md:gap-8`}>
+          <div className={`${sectionInner} flex flex-col items-center justify-center gap-2 text-center text-xs text-text-subtle sm:gap-3 sm:text-sm md:flex-row md:gap-8`}>
             <p className="font-mono text-[10px] uppercase tracking-[0.18em] sm:text-[11px] sm:tracking-[0.2em]">
               &copy; {footerYear} {profile.name}
             </p>
-            <p className="font-display max-w-[min(100%,20rem)] text-sm leading-snug text-slate-700 sm:max-w-none sm:text-base">
+            <p className="font-display max-w-[min(100%,20rem)] text-sm leading-snug text-text-body sm:max-w-none sm:text-base">
               Seoul · {profile.role.split(" ").slice(0, 2).join(" ")}
             </p>
           </div>

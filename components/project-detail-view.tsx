@@ -130,7 +130,7 @@ function RevealStagger({
 function SectionTitle({ title }: { title: string }) {
   return (
     <h2
-      className="border-l-4 border-[#3B82F6] pl-3 font-display text-[22px] font-bold leading-tight tracking-[-0.03em] text-slate-900"
+      className="border-l-4 border-sky-700 pl-3 font-display text-[22px] font-bold leading-tight tracking-[-0.03em] text-text-heading text-shadow-crisp"
     >
       {title}
     </h2>
@@ -140,20 +140,20 @@ function SectionTitle({ title }: { title: string }) {
 function BgProblemBlocks() {
   return (
     <div className="mt-6 grid gap-4 md:grid-cols-2">
-      <div className="rounded-2xl border border-slate-200/55 bg-white/35 p-5 shadow-none backdrop-blur-md">
-        <p className="text-base font-semibold text-slate-900 md:text-lg">
+      <div className="rounded-2xl border border-slate-200/55 bg-white/85 p-5 shadow-none backdrop-blur-md">
+        <p className="text-base font-semibold text-text-heading md:text-lg">
           여러 교육 기관에서 사용할 수 있는 통합 학사 관리 시스템 구축
         </p>
-        <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
+        <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-text-muted">
           <li>기관 등록 기능을 통해 여러 학원을 통합적으로 관리 가능한 구조로 설계</li>
           <li>관리자, 강사, 수강생 권한에 따라 교육과정, 시험, 과제, 평가 기능을 유기적으로 운영</li>
         </ul>
       </div>
-      <div className="rounded-2xl border border-slate-200/55 bg-white/35 p-5 shadow-none backdrop-blur-md">
-        <p className="text-base font-semibold text-slate-900 md:text-lg">
+      <div className="rounded-2xl border border-slate-200/55 bg-white/85 p-5 shadow-none backdrop-blur-md">
+        <p className="text-base font-semibold text-text-heading md:text-lg">
           반응형 기반으로 사용자 경험에 맞춘 학사 서비스 제공
         </p>
-        <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-slate-600">
+        <ul className="mt-3 list-disc space-y-2 pl-5 text-sm text-text-muted">
           <li>다양한 디바이스에서 접근 가능한 반응형 UI 제공</li>
           <li>직관적인 화면 구성과 메뉴 흐름으로 업무 이해도와 사용성 향상</li>
         </ul>
@@ -176,7 +176,7 @@ function ArchitecturePanel({
       <div className="relative aspect-[16/9] w-full bg-gradient-to-b from-slate-100/40 to-transparent">
         <Image src={imageSrc} alt={imageAlt} fill className="object-contain p-4 md:p-6" priority />
       </div>
-      <p className="border-t border-slate-200/80 px-5 py-4 text-sm italic text-gray-400">{summary}</p>
+      <p className="border-t border-slate-200/80 px-5 py-4 text-sm italic text-text-muted">{summary}</p>
     </div>
   )
 }
@@ -203,15 +203,15 @@ function FeatureZigzag({ blocks }: { blocks: FeatureBlock[] }) {
                 <div className="flex-1 md:w-[calc(50%-2rem)]">
                   <div
                     className={cn(
-                      "rounded-xl border-0 border-l-[3px] border-solid bg-white/30 py-4 pl-4 pr-4 shadow-none backdrop-blur-md transition-all duration-300 md:py-5 md:pl-5",
+                      "rounded-xl border-0 border-l-[3px] border-solid bg-white/82 py-4 pl-4 pr-4 shadow-none backdrop-blur-md transition-all duration-300 md:py-5 md:pl-5",
                       block.borderClass,
                     )}
                   >
-                    <h3 className="font-display text-lg font-semibold text-slate-900">{block.title}</h3>
-                    <ul className="mt-3 space-y-2 text-sm text-slate-600">
+                    <h3 className="font-display text-lg font-bold text-text-heading">{block.title}</h3>
+                    <ul className="mt-3 space-y-2 text-sm text-text-muted">
                       {block.items.map((line) => (
                         <li key={line} className="flex gap-2">
-                          <span className="text-sky-500">•</span>
+                          <span className="text-sky-800">•</span>
                           <span>{line}</span>
                         </li>
                       ))}
@@ -222,7 +222,7 @@ function FeatureZigzag({ blocks }: { blocks: FeatureBlock[] }) {
                   className="relative z-10 mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-slate-200/70 bg-white/70 shadow-sm backdrop-blur-sm md:absolute md:left-1/2 md:top-6 md:-translate-x-1/2"
                   aria-hidden
                 >
-                  <Icon className="h-5 w-5 text-slate-600" />
+                  <Icon className="h-5 w-5 text-text-muted" />
                 </div>
                 <div className="hidden flex-1 md:block md:w-[calc(50%-2rem)]" aria-hidden />
               </div>
@@ -236,7 +236,7 @@ function FeatureZigzag({ blocks }: { blocks: FeatureBlock[] }) {
 
 function RolesBlock({ tech, plan }: { tech: RoleLine[]; plan: RoleLine[] }) {
   return (
-    <div className="mt-6 rounded-2xl border border-slate-200/45 bg-white/25 p-6 shadow-none backdrop-blur-md md:p-10">
+    <div className="mt-6 rounded-2xl border border-slate-200/45 bg-white/78 p-6 shadow-none backdrop-blur-md md:p-10">
       <div className="mb-8">
         <p className="mb-4 flex items-center gap-2 text-sm font-bold text-blue-600">
           <Code2 className="h-5 w-5" />
@@ -244,10 +244,10 @@ function RolesBlock({ tech, plan }: { tech: RoleLine[]; plan: RoleLine[] }) {
         </p>
         <ul className="divide-y divide-[#E5E7EB]">
           {tech.map((row) => (
-            <li key={row.num} className="py-4 text-sm leading-relaxed text-slate-700 md:text-base">
-              <span className="font-mono text-slate-400">{row.num}</span>{" "}
-              <span className="font-bold text-slate-900">{row.keyword}</span>{" "}
-              <span className="text-slate-600">{row.desc}</span>
+            <li key={row.num} className="py-4 text-sm leading-relaxed text-text-body md:text-base">
+              <span className="font-mono text-text-subtle">{row.num}</span>{" "}
+              <span className="font-bold text-text-heading">{row.keyword}</span>{" "}
+              <span className="text-text-muted">{row.desc}</span>
             </li>
           ))}
         </ul>
@@ -259,10 +259,10 @@ function RolesBlock({ tech, plan }: { tech: RoleLine[]; plan: RoleLine[] }) {
         </p>
         <ul className="divide-y divide-[#E5E7EB]">
           {plan.map((row) => (
-            <li key={row.num} className="py-4 text-sm leading-relaxed text-slate-700 md:text-base">
-              <span className="font-mono text-slate-400">{row.num}</span>{" "}
-              <span className="font-bold text-slate-900">{row.keyword}</span>{" "}
-              <span className="text-slate-600">{row.desc}</span>
+            <li key={row.num} className="py-4 text-sm leading-relaxed text-text-body md:text-base">
+              <span className="font-mono text-text-subtle">{row.num}</span>{" "}
+              <span className="font-bold text-text-heading">{row.keyword}</span>{" "}
+              <span className="text-text-muted">{row.desc}</span>
             </li>
           ))}
         </ul>
@@ -284,11 +284,11 @@ function StepBlock({
 }) {
   return (
     <div className={cn("rounded-lg border-l-4 bg-slate-50/35 py-3 pl-4 pr-3 backdrop-blur-sm", borderClass)}>
-      <p className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-slate-700">
+      <p className="mb-2 flex items-center gap-2 text-xs font-bold uppercase tracking-wide text-text-body">
         <span aria-hidden>{emoji}</span>
         {label}
       </p>
-      <div className="text-sm text-slate-600">{children}</div>
+      <div className="text-sm text-text-muted">{children}</div>
     </div>
   )
 }
@@ -313,16 +313,16 @@ function TroubleshootingAccordion({ items }: { items: TroubleItem[] }) {
         <AccordionItem
           key={item.id}
           value={item.id}
-          className="overflow-hidden rounded-xl border border-slate-200/55 bg-white/35 px-4 shadow-none backdrop-blur-md"
+          className="overflow-hidden rounded-xl border border-slate-200/55 bg-white/85 px-4 shadow-none backdrop-blur-md"
         >
           <AccordionTrigger className="py-4 hover:no-underline">
             <div className="flex flex-1 flex-col items-start gap-2 text-left sm:flex-row sm:items-center sm:gap-3">
-              <span className="font-semibold text-slate-900">{item.title}</span>
+              <span className="font-semibold text-text-heading">{item.title}</span>
               <span className="flex flex-wrap gap-1.5">
                 {item.tags.map((t) => (
                   <span
                     key={t}
-                    className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-slate-800"
+                    className="rounded-full bg-slate-100 px-2.5 py-0.5 text-xs font-medium text-text-body"
                   >
                     {t}
                   </span>
@@ -377,23 +377,23 @@ function RoadmapRowCard({ row }: { row: RoadmapRow }) {
       cyan: "border-l-cyan-500",
     }
     const stepTone = {
-      slate: "text-slate-500",
-      sky: "text-sky-700",
+      slate: "text-text-subtle",
+      sky: "text-sky-900",
       cyan: "text-cyan-700",
     }
     return (
       <div
         className={cn(
-          "flex-1 rounded-2xl border border-slate-200/55 border-l-[3px] bg-white/35 p-5 shadow-none backdrop-blur-md",
+          "flex-1 rounded-2xl border border-slate-200/55 border-l-[3px] bg-white/85 p-5 shadow-none backdrop-blur-md",
           accentBar[accent],
         )}
       >
         <p className={cn("text-xs font-bold uppercase tracking-wider", stepTone[accent])}>{step}</p>
-        <h4 className="mt-2 font-display text-lg font-bold text-slate-900">{title}</h4>
-        <ul className="mt-3 space-y-2 text-sm leading-relaxed text-slate-600">
+        <h4 className="mt-2 font-display text-lg font-bold text-text-heading">{title}</h4>
+        <ul className="mt-3 space-y-2 text-sm leading-relaxed text-text-muted">
           {bullets.map((b) => (
             <li key={b} className="flex gap-2">
-              <span className="shrink-0 font-semibold text-sky-700 tabular-nums" aria-hidden>
+              <span className="shrink-0 font-semibold text-sky-900 tabular-nums" aria-hidden>
                 →
               </span>
               <span>{b}</span>
@@ -405,7 +405,7 @@ function RoadmapRowCard({ row }: { row: RoadmapRow }) {
   }
   return (
     <div className="mb-10 last:mb-0">
-      <p className="mb-4 font-display text-base font-semibold text-slate-800">{row.title}</p>
+      <p className="mb-4 font-display text-base font-semibold text-text-body">{row.title}</p>
       <div className="flex flex-col gap-4 md:flex-row md:items-stretch">
         <Cell step="01" title="현재 문제" accent="slate" bullets={row.problem.bullets} />
         <Arrow />
@@ -438,7 +438,7 @@ function LinkCard({
       href={href}
       target="_blank"
       rel="noopener noreferrer"
-      className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200/60 bg-white/40 px-4 py-3.5 text-sm font-medium text-slate-800 shadow-none backdrop-blur-md transition-all hover:border-[#3B82F6] hover:bg-white/55"
+      className="group flex items-center justify-between gap-3 rounded-xl border border-slate-200/60 bg-white/86 px-4 py-3.5 text-sm font-medium text-text-body shadow-none backdrop-blur-md transition-all hover:border-[#3B82F6] hover:bg-white/88"
     >
       <span className="flex min-w-0 items-center gap-3">
         <span className={cn("flex h-10 w-10 shrink-0 items-center justify-center rounded-lg", iconClass)}>
@@ -446,7 +446,7 @@ function LinkCard({
         </span>
         <span className="truncate">{title}</span>
       </span>
-      <ExternalLink className="h-4 w-4 shrink-0 text-slate-400 transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#3B82F6]" />
+      <ExternalLink className="h-4 w-4 shrink-0 text-text-subtle transition-transform group-hover:translate-x-0.5 group-hover:-translate-y-0.5 group-hover:text-[#3B82F6]" />
     </a>
   )
 }
@@ -474,7 +474,7 @@ function DetailSection({
 }
 
 const backLinkFloatingClass =
-  `fixed left-[max(1rem,env(safe-area-inset-left))] ${detailFloatingBackTopClass} z-[45] inline-flex max-w-[calc(100vw-2.5rem)] items-center gap-2 rounded-full border border-slate-200/70 bg-white/55 px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-xl transition-[opacity,transform] duration-200 hover:border-sky-300/80 hover:bg-white/80 hover:text-sky-900`
+  `fixed left-[max(1rem,env(safe-area-inset-left))] ${detailFloatingBackTopClass} z-[45] inline-flex max-w-[calc(100vw-2.5rem)] items-center gap-2 rounded-full border border-slate-200/70 bg-white/88 px-3.5 py-2 text-sm font-medium text-text-body shadow-sm backdrop-blur-xl transition-[opacity,transform] duration-200 hover:border-sky-300/80 hover:bg-white/80 hover:text-sky-900`
 
 export function ProjectDetailView({ project }: { project: Project }) {
   const [activeSection, setActiveSection] = useState("")
@@ -575,13 +575,13 @@ export function ProjectDetailView({ project }: { project: Project }) {
   ]
 
   return (
-    <div className="relative min-h-screen isolate overflow-x-hidden text-slate-900">
+    <div className="relative min-h-screen isolate overflow-x-hidden text-text-heading">
       <Background3D />
       <DetailPageTopNav
         items={[...detailSectionNav]}
         drawerTitle="프로젝트 섹션"
         rightLabel={
-          <span className="font-mono text-xs uppercase tracking-[0.16em] text-slate-500">
+          <span className="font-mono text-xs uppercase tracking-[0.16em] text-text-subtle">
             Project {project.id}
           </span>
         }
@@ -618,13 +618,13 @@ export function ProjectDetailView({ project }: { project: Project }) {
                 <Link
                   href="/"
                   tabIndex={backLinkPinned ? -1 : undefined}
-                  className="inline-flex max-w-full items-center gap-2 text-sm font-medium text-slate-600 transition-colors hover:text-sky-800"
+                  className="inline-flex max-w-full items-center gap-2 text-sm font-medium text-text-muted transition-colors hover:text-sky-900"
                 >
                   <ArrowLeft className="h-4 w-4 shrink-0" />
                   포트폴리오로 돌아가기
                 </Link>
               </div>
-              <div className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-slate-500 sm:text-xs sm:tracking-[0.16em]">
+              <div className="shrink-0 font-mono text-[10px] uppercase tracking-[0.14em] text-text-subtle sm:text-xs sm:tracking-[0.16em]">
                 Project {project.id}
               </div>
             </div>
@@ -643,7 +643,7 @@ export function ProjectDetailView({ project }: { project: Project }) {
                       <span className="inline-flex items-center rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-900 ring-1 ring-sky-200/70">
                         {projectName}
                       </span>
-                      <span className="text-xs font-medium text-slate-500">Project</span>
+                      <span className="text-xs font-medium text-text-subtle">Project</span>
                     </div>
 
                     {isLms ? (
@@ -651,7 +651,7 @@ export function ProjectDetailView({ project }: { project: Project }) {
                         <h1 className="font-display mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-3xl sm:leading-snug md:text-4xl lg:text-5xl">
                           무중단 통합 교육관 관리 시스템
                         </h1>
-                        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-base md:text-lg">
+                        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-text-muted sm:mt-5 sm:text-base md:text-lg">
                           통합 학사운영을 위한, 클라우드 기반 교육관 관리 프로그램
                         </p>
                       </>
@@ -660,7 +660,7 @@ export function ProjectDetailView({ project }: { project: Project }) {
                         <h1 className="font-display mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-3xl sm:leading-snug md:text-4xl lg:text-5xl">
                           {project.title}
                         </h1>
-                        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-base md:text-lg">
+                        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-text-muted sm:mt-5 sm:text-base md:text-lg">
                           기업의 핵심 업무 프로세스를 통합 관리 플랫폼
                         </p>
                       </>
@@ -697,7 +697,7 @@ export function ProjectDetailView({ project }: { project: Project }) {
                 <DetailSection id="pd-overview" first>
                   <RevealSection className={detailContentShell}>
                     <SectionTitle title="프로젝트 개요" />
-                    <p className="mt-6 max-w-3xl text-sm leading-7 text-slate-600 md:text-base">{project.overview}</p>
+                    <p className="mt-6 max-w-3xl text-sm leading-7 text-text-muted md:text-base">{project.overview}</p>
                   </RevealSection>
                 </DetailSection>
 
@@ -707,8 +707,8 @@ export function ProjectDetailView({ project }: { project: Project }) {
                     {isLms ? (
                       <BgProblemBlocks />
                     ) : (
-                      <div className="mt-6 rounded-2xl border border-slate-200/55 bg-white/35 p-6 shadow-none backdrop-blur-md">
-                        <p className="text-sm leading-7 text-slate-600 md:text-base">
+                      <div className="mt-6 rounded-2xl border border-slate-200/55 bg-white/85 p-6 shadow-none backdrop-blur-md">
+                        <p className="text-sm leading-7 text-text-muted md:text-base">
                           기업에서는 인사정보, 근태관리, 공지사항 등 다양한 업무가 여러 시스템이나 엑셀로 분산 관리되는
                           경우가 많습니다. 이런 경우 데이터 관리가 비효율적이고 업무 처리 속도가 느려지는 문제가
                           있습니다. 이러한 문제를 해결하기 위해 업무 시스템을 통합 관리할 수 있는 ERP 시스템을 구현하게
@@ -769,15 +769,15 @@ export function ProjectDetailView({ project }: { project: Project }) {
                       {(isLms ? kpiLms : kpiErp).map((k) => (
                         <div
                           key={k.desc}
-                          className="flex h-full min-h-0 min-w-0 flex-col rounded-2xl border border-sky-200/50 bg-white/35 px-5 py-5 text-center shadow-none backdrop-blur-md sm:px-5 sm:py-6"
+                          className="flex h-full min-h-0 min-w-0 flex-col rounded-2xl border border-sky-200/50 bg-white/85 px-5 py-5 text-center shadow-none backdrop-blur-md sm:px-5 sm:py-6"
                         >
-                          <p className="font-display text-2xl font-bold leading-tight tracking-tight text-slate-900 sm:text-[1.625rem] md:text-[1.75rem]">
+                          <p className="font-display text-2xl font-bold leading-tight tracking-tight text-text-heading sm:text-[1.625rem] md:text-[1.75rem]">
                             {k.value}
                           </p>
-                          <p className="mt-2 text-sm font-semibold leading-snug text-sky-600 md:text-[0.9375rem]">
+                          <p className="mt-2 text-sm font-semibold leading-snug text-sky-800 md:text-[0.9375rem]">
                             {k.unit}
                           </p>
-                          <p className="mt-3 text-pretty text-sm leading-relaxed text-slate-600 md:text-[0.9375rem] md:leading-7">
+                          <p className="mt-3 text-pretty text-sm leading-relaxed text-text-muted md:text-[0.9375rem] md:leading-7">
                             {k.desc}
                           </p>
                         </div>
@@ -786,20 +786,20 @@ export function ProjectDetailView({ project }: { project: Project }) {
                     {isLms ? (
                       <div className="mt-10 grid gap-8 border-t border-blue-100/80 pt-10 md:grid-cols-2">
                         <div className="md:border-r md:border-blue-100/80 md:pr-8">
-                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-700 md:text-base">
+                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-900 md:text-base">
                             {resultsLmsLeft.map((t) => (
                               <li key={t} className="flex gap-2">
-                                <span className="shrink-0 text-emerald-500">✓</span>
+                                <span className="shrink-0 text-emerald-700">✓</span>
                                 <span>{t}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
                         <div className="md:pl-8">
-                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-700 md:text-base">
+                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-900 md:text-base">
                             {resultsLmsRight.map((t) => (
                               <li key={t} className="flex gap-2">
-                                <span className="shrink-0 text-emerald-500">✓</span>
+                                <span className="shrink-0 text-emerald-700">✓</span>
                                 <span>{t}</span>
                               </li>
                             ))}
@@ -809,20 +809,20 @@ export function ProjectDetailView({ project }: { project: Project }) {
                     ) : (
                       <div className="mt-10 grid gap-8 border-t border-blue-100/80 pt-10 md:grid-cols-2">
                         <div className="md:border-r md:border-blue-100/80 md:pr-8">
-                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-700 md:text-base">
+                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-900 md:text-base">
                             {resultsErpLeft.map((t) => (
                               <li key={t} className="flex gap-2">
-                                <span className="shrink-0 text-emerald-500">✓</span>
+                                <span className="shrink-0 text-emerald-700">✓</span>
                                 <span>{t}</span>
                               </li>
                             ))}
                           </ul>
                         </div>
                         <div className="md:pl-8">
-                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-700 md:text-base">
+                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-900 md:text-base">
                             {resultsErpRight.map((t) => (
                               <li key={t} className="flex gap-2">
-                                <span className="shrink-0 text-emerald-500">✓</span>
+                                <span className="shrink-0 text-emerald-700">✓</span>
                                 <span>{t}</span>
                               </li>
                             ))}
@@ -831,19 +831,19 @@ export function ProjectDetailView({ project }: { project: Project }) {
                       </div>
                     )}
                     {isLms ? (
-                      <ul className="mt-8 grid gap-2 border-t border-blue-100/80 pt-8 text-sm leading-relaxed text-emerald-700 md:grid-cols-2 md:text-base">
+                      <ul className="mt-8 grid gap-2 border-t border-blue-100/80 pt-8 text-sm leading-relaxed text-emerald-900 md:grid-cols-2 md:text-base">
                         {resultsLmsWide.map((t) => (
                           <li key={t} className="flex gap-2">
-                            <span className="shrink-0 text-emerald-500">✓</span>
+                            <span className="shrink-0 text-emerald-700">✓</span>
                             <span>{t}</span>
                           </li>
                         ))}
                       </ul>
                     ) : (
-                      <ul className="mt-8 grid gap-2 border-t border-blue-100/80 pt-8 text-sm leading-relaxed text-emerald-700 md:grid-cols-2 md:text-base">
+                      <ul className="mt-8 grid gap-2 border-t border-blue-100/80 pt-8 text-sm leading-relaxed text-emerald-900 md:grid-cols-2 md:text-base">
                         {resultsErpWide.map((t) => (
                           <li key={t} className="flex gap-2">
-                            <span className="shrink-0 text-emerald-500">✓</span>
+                            <span className="shrink-0 text-emerald-700">✓</span>
                             <span>{t}</span>
                           </li>
                         ))}
@@ -867,8 +867,8 @@ export function ProjectDetailView({ project }: { project: Project }) {
 
             <aside className={cn("self-start", detailContentShell, "lg:sticky lg:top-28")}>
               <RevealSection>
-                <div className="rounded-2xl border border-slate-200/55 bg-white/40 p-6 shadow-none backdrop-blur-md">
-                  <h3 className="border-l-4 border-[#3B82F6] pl-3 font-display text-[22px] font-bold text-slate-900">
+                <div className="rounded-2xl border border-slate-200/55 bg-white/86 p-6 shadow-none backdrop-blur-md">
+                  <h3 className="border-l-4 border-[#3B82F6] pl-3 font-display text-[22px] font-bold text-text-heading">
                     Links
                   </h3>
                   <div className="mt-6 space-y-3">
@@ -883,7 +883,7 @@ export function ProjectDetailView({ project }: { project: Project }) {
                         href={lmsyncDocsFolderUrl}
                         title="문서 (Google Drive)"
                         icon={FileSpreadsheet}
-                        iconClass="bg-emerald-50 text-emerald-600"
+                        iconClass="bg-emerald-50 text-emerald-800"
                       />
                     ) : null}
                     <LinkCard
@@ -891,7 +891,7 @@ export function ProjectDetailView({ project }: { project: Project }) {
                       title={isLms ? "Notion" : "GitHub"}
                       icon={isLms ? BookOpen : Github}
                       iconClass={
-                        isLms ? "bg-violet-100 text-violet-700" : "bg-slate-900 text-white"
+                        isLms ? "bg-violet-100 text-violet-900" : "bg-slate-900 text-white"
                       }
                     />
                   </div>

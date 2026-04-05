@@ -13,7 +13,7 @@ export default function IntroductionPage() {
   const sectionNav = getIntroductionSectionNav(introductionDetail.sections)
 
   return (
-    <div className="relative min-h-screen isolate overflow-x-hidden text-slate-900">
+    <div className="relative min-h-screen isolate overflow-x-hidden text-text-heading">
       <Background3D />
       <IntroductionScrollBackLayout title={introductionDetail.title} sectionNav={sectionNav}>
         {introductionDetail.sections.map((section, idx) => (
@@ -22,16 +22,16 @@ export default function IntroductionPage() {
             id={sectionNav[idx].id}
             className={`${introductionCardClass} scroll-mt-28 md:scroll-mt-32`}
           >
-            <h2 className="font-display text-lg font-semibold tracking-[-0.02em] text-slate-900 md:text-xl">
+            <h2 className="font-display text-lg font-bold tracking-[-0.02em] text-text-heading text-shadow-crisp md:text-xl">
               {section.heading}
             </h2>
             {section.lead ? (
-              <p className="mt-4 border-l-[3px] border-sky-500 pl-4 text-base font-medium leading-8 text-slate-700 md:leading-8">
+              <p className="mt-4 border-l-[3px] border-sky-700 pl-4 text-base font-semibold leading-8 text-text-body md:leading-8">
                 {section.lead}
               </p>
             ) : null}
             <div
-              className={`space-y-4 text-sm leading-8 text-slate-600 md:text-base md:leading-8 ${section.lead ? "mt-5" : "mt-4"}`}
+              className={`space-y-4 text-sm font-medium leading-8 text-text-muted md:text-base md:leading-8 ${section.lead ? "mt-5" : "mt-4"}`}
             >
               {section.body.map((p, i) => (
                 <p key={i}>{p}</p>

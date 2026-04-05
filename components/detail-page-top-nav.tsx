@@ -38,7 +38,7 @@ export function DetailPageTopNav({
         <div className="mx-auto flex w-full max-w-6xl items-center justify-between gap-3 px-4 py-2.5 md:px-8 md:py-3.5">
           <Link
             href="/"
-            className="font-display min-w-0 shrink truncate text-sm font-semibold tracking-[-0.03em] text-slate-900 outline-none ring-sky-400/0 transition hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-500/80 sm:text-base"
+            className="font-display min-w-0 shrink truncate text-sm font-semibold tracking-[-0.03em] text-text-heading outline-none ring-sky-400/0 transition hover:text-sky-900 focus-visible:ring-2 focus-visible:ring-sky-500/80 sm:text-base"
           >
             포트폴리오
           </Link>
@@ -48,7 +48,7 @@ export function DetailPageTopNav({
           {items.length > 0 ? (
             <button
               type="button"
-              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200/90 bg-white/70 text-slate-800 shadow-sm backdrop-blur-md transition hover:border-sky-300/80 hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/70 lg:hidden"
+              className="inline-flex h-10 w-10 shrink-0 items-center justify-center rounded-xl border border-slate-200/90 bg-white/70 text-text-body shadow-sm backdrop-blur-md transition hover:border-sky-300/80 hover:bg-white/90 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-sky-500/70 lg:hidden"
               aria-expanded={open}
               aria-controls={menuId}
               aria-label={open ? "메뉴 닫기" : "섹션 메뉴 열기"}
@@ -76,10 +76,10 @@ export function DetailPageTopNav({
           />
           <div className="absolute right-0 top-0 flex h-full w-[min(100%,19rem)] flex-col border-l border-slate-200/90 bg-white/95 shadow-2xl backdrop-blur-xl supports-[backdrop-filter]:bg-white/90">
             <div className="flex items-center justify-between border-b border-slate-200/80 px-4 py-3">
-              <span className="font-display text-sm font-semibold text-slate-900">{drawerTitle}</span>
+              <span className="font-display text-sm font-semibold text-text-heading">{drawerTitle}</span>
               <button
                 type="button"
-                className="rounded-lg p-2 text-slate-600 transition hover:bg-slate-100 hover:text-slate-900"
+                className="rounded-lg p-2 text-text-muted transition hover:bg-slate-100 hover:text-text-heading"
                 aria-label="메뉴 닫기"
                 onClick={() => setOpen(false)}
               >
@@ -92,7 +92,7 @@ export function DetailPageTopNav({
                   key={id}
                   href={`#${id}`}
                   className={cn(
-                    "rounded-xl px-4 py-3.5 text-[15px] font-medium text-slate-800 transition",
+                    "rounded-xl px-4 py-3.5 text-[15px] font-medium text-text-body transition",
                     "hover:bg-gradient-to-r hover:from-sky-50 hover:to-violet-50 hover:text-sky-900",
                   )}
                   onClick={() => setOpen(false)}

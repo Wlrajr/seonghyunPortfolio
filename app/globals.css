@@ -3,22 +3,24 @@
 
 @custom-variant dark (&:is(.dark *));
 
-/* 다크 포트폴리오 기본 테마 (#0a0a0b 배경 + 시안·바이올렛 악센트) */
+/* 라이트 배경: 본문 #2d2d5e 계열, 제목 #1a1a2e — WCAG AA 대비 목표 */
 :root {
   --background: oklch(0.9 0.02 220);
-  --foreground: oklch(0.3 0.03 246);
-  --card: oklch(0.95 0.01 220 / 0.72);
-  --card-foreground: oklch(0.94 0.01 260);
-  --popover: oklch(0.97 0.01 220 / 0.9);
-  --popover-foreground: oklch(0.94 0.01 260);
-  --primary: oklch(0.62 0.14 224);
+  /* 본문 기본 (≈ #2d2d5e) */
+  --foreground: #2d2d5e;
+  --card: oklch(0.97 0.01 220 / 0.9);
+  --card-foreground: #1a1a2e;
+  --popover: oklch(0.98 0.01 220 / 0.94);
+  --popover-foreground: #1a1a2e;
+  --primary: oklch(0.48 0.14 240);
   --primary-foreground: oklch(0.98 0.008 210);
-  --secondary: oklch(0.86 0.02 210 / 0.8);
-  --secondary-foreground: oklch(0.33 0.03 245);
-  --muted: oklch(0.88 0.018 215 / 0.84);
-  --muted-foreground: oklch(0.45 0.02 240);
-  --accent: oklch(0.72 0.12 336);
-  --accent-foreground: oklch(0.98 0.008 210);
+  --secondary: oklch(0.9 0.02 210 / 0.88);
+  --secondary-foreground: #1a1a2e;
+  --muted: oklch(0.9 0.02 215 / 0.88);
+  /* 보조 텍스트 — 연한 배경에서 4.5:1 이상 유지 */
+  --muted-foreground: #3d4d6e;
+  --accent: oklch(0.52 0.16 300);
+  --accent-foreground: #f8fafc;
   --destructive: oklch(0.55 0.2 25);
   --destructive-foreground: oklch(0.98 0.01 260);
   --border: oklch(0.78 0.02 220 / 0.74);
@@ -42,9 +44,10 @@
 
 .dark {
   --background: oklch(0.07 0.01 250);
-  --foreground: oklch(0.95 0.01 240);
-  --card: oklch(0.16 0.01 245 / 0.72);
-  --card-foreground: oklch(0.93 0 0);
+  /* 어두운 배경 위 본문 */
+  --foreground: #f0f0ff;
+  --card: oklch(0.16 0.01 245 / 0.82);
+  --card-foreground: #f8fafc;
   --popover: oklch(0.14 0.01 245 / 0.84);
   --popover-foreground: oklch(0.93 0 0);
   --primary: oklch(0.74 0.11 240);
@@ -103,6 +106,13 @@
   --color-chart-3: var(--chart-3);
   --color-chart-4: var(--chart-4);
   --color-chart-5: var(--chart-5);
+  /* 의미 색 (Tailwind: text-text-heading 등) */
+  --color-text-heading: #1a1a2e;
+  --color-text-body: #2d2d5e;
+  --color-text-muted: #3d4d6e;
+  --color-text-subtle: #4a5688;
+  --color-accent-blue: #075985;
+  --color-accent-violet: #5b21b6;
   --radius-sm: calc(var(--radius) - 4px);
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
@@ -122,7 +132,7 @@
     @apply border-border outline-ring/50;
   }
   body {
-    @apply bg-background text-foreground;
+    @apply bg-background font-medium text-foreground antialiased;
     font-family: var(--font-sans);
     min-height: 100vh;
     background-image:
@@ -189,6 +199,13 @@
 
 .font-display {
   font-family: var(--font-display);
+}
+
+/* 밝은 배경·그라데이션 위 주요 텍스트 가독성 */
+@utility text-shadow-crisp {
+  text-shadow:
+    0 1px 2px rgba(255, 255, 255, 0.88),
+    0 0 1px rgba(26, 26, 46, 0.1);
 }
 
 /* Sony-style smooth scrolling */
@@ -329,13 +346,19 @@ html {
     background: linear-gradient(90deg, rgba(224, 242, 254, 0.7), rgba(248, 250, 252, 0.08));
   }
 
-  .project-detail-page h1,
-  .project-detail-page h2,
-  .project-detail-page h3,
-  .project-detail-page p,
-  .project-detail-page li,
-  .project-detail-page span {
-    text-shadow: none;
+  /* 반투명 카드·그라데이션 위 제목·본문 선명도 */
+  .project-detail-page .detail-main h1,
+  .project-detail-page .detail-main h2,
+  .project-detail-page .detail-main h3 {
+    text-shadow:
+      0 1px 2px rgba(255, 255, 255, 0.92),
+      0 0 1px rgba(26, 26, 46, 0.12);
+  }
+
+  .project-detail-page .detail-main [class*="backdrop-blur"] p,
+  .project-detail-page .detail-main [class*="bg-white/"] p,
+  .project-detail-page .detail-main [class*="bg-white/"] li {
+    text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
   }
 
   @media (min-width: 768px) {

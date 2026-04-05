@@ -12,6 +12,8 @@ export type TrainingEntry = {
   course: string
   period: string
   detail?: string
+  /** Training 카드 상단 로고 (`public` 기준 경로, 예: `/logo-udemy.png`) */
+  logoSrc?: string
 }
 
 export type WorkEntry = {
@@ -42,12 +44,14 @@ export const trainingHistory: TrainingEntry[] = [
     period: "2025.01.21 ~ 2025.08.06",
     detail:
       "수료 · 특모범상(출석률 100%), 프로젝트 최우수상, SW 혁신상, 봉사상",
+    logoSrc: "/logo-korea-ict.png",
   },
   {
     organization: "Udemy",
     course: "100일 코딩 챌린지 — 웹 개발자 부트캠프",
     period: "2024.07.13 ~ 2024.10.12",
     detail: "수료 (3개월 온라인 교육)",
+    logoSrc: "/logo-udemy.png",
   },
 ]
 
