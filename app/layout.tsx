@@ -38,11 +38,11 @@ const metadataBase = siteMetadataBase()
 const siteUrl = metadataBase.origin
 const ogImageUrl = `${siteUrl}/og-image.png`
 
-/** 링크 미리보기(OG) — `public/og-image.png` */
+/** 링크 미리보기(OG) — `public/og-image.png` (1200×630) */
 const ogImage = {
   url: ogImageUrl,
-  width: 394,
-  height: 254,
+  width: 1200,
+  height: 630,
   type: 'image/png',
 } as const
 
