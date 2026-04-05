@@ -9,9 +9,23 @@ const notoSansKr = Noto_Sans_KR({
   variable: '--font-noto-sans-kr',
 })
 
+/**
+ * OG 이미지 등 절대 URL의 호스트.
+ * `VERCEL_URL`만 쓰면 배포별 임시 도메인(…-projects.vercel.app)이 들어가고,
+ * 그 URL은 비공개 배포에서 401이 나와 카카오 등 미리보기가 비게 됩니다.
+ * 프로덕션 고정 도메인은 `VERCEL_PROJECT_PRODUCTION_URL` 또는 `NEXT_PUBLIC_SITE_URL`을 씁니다.
+ */
 function siteMetadataBase(): URL {
-  if (process.env.NEXT_PUBLIC_SITE_URL) {
-    return new URL(process.env.NEXT_PUBLIC_SITE_URL)
+  const site = process.env.NEXT_PUBLIC_SITE_URL?.trim()
+  if (site) {
+    return new URL(site)
+  }
+  const productionHost = process.env.VERCEL_PROJECT_PRODUCTION_URL?.trim()
+  if (productionHost) {
+    const origin = productionHost.startsWith('http')
+      ? productionHost
+      : `https://${productionHost}`
+    return new URL(origin)
   }
   if (process.env.VERCEL_URL) {
     return new URL(`https://${process.env.VERCEL_URL}`)
