@@ -149,63 +149,127 @@ export const lmsTroubleshooting: TroubleItem[] = [
   {
     id: "s3",
     title: "AWS S3 Pre-signed URL 파일 업로드 개선",
-    tags: ["AWS S3", "Spring Boot"],
+    tags: ["AWS S3", "Spring Boot", "Pre-signed URL"],
     problem: [
-      "기존 업로드가 클라이언트 → 서버 → S3 구조로 동작",
-      "대용량 업로드 시 서버 메모리·네트워크 부하 증가",
-      "동시 업로드 증가 시 서버 병목",
+      "기존 파일 업로드 구조가 클라이언트 → 서버 → S3 순으로 동작했습니다.",
+      "대용량 파일 업로드 시 서버 메모리 사용량이 증가하고, 업로드 시간이 길어지는 현상이 있었습니다.",
+      "서버 네트워크 트래픽이 늘어나 동시 업로드가 많아질 경우 서버 부하가 커졌습니다.",
+      "과제 제출·자료 업로드가 잦은 LMS 환경에서 서버를 반드시 거치는 구조는 비효율적이었습니다.",
     ],
-    cause: ["서버가 파일 중계 역할을 수행", "업로드 속도가 서버 네트워크에 의존"],
+    cause: [
+      "파일 전달 흐름이 ‘브라우저 → 서버 → S3’로 이어져, 서버가 단순히 파일을 넘기는 중계(Relay) 역할을 했습니다.",
+      "그 과정에서 CPU·메모리 등 서버 자원을 과다하게 사용했습니다.",
+      "업로드 속도가 서버의 네트워크 성능에 크게 의존하는 구조였습니다.",
+    ],
     solution: [
-      "Pre-signed URL 방식으로 구조 변경",
-      "Client → Server (Pre-signed URL 요청) → S3 URL 생성 → Client → S3 직접 업로드",
+      "AWS S3의 Pre-signed URL 방식을 도입해, 클라이언트가 S3로 파일을 직접 업로드하도록 구조를 바꿨습니다.",
+      "새 프로세스: (1) Client → Server에 Presigned URL 요청, (2) Server에서 AWS SDK로 Presigned URL 생성, (3) Server → Client에 URL 반환, (4) Client → S3에 해당 URL로 직접 업로드.",
+      "서버는 S3 SDK로 URL 생성, 허용 HTTP Method·만료 시간 등 보안·정책 관리, 업로드 완료 후 최종 파일 URL 저장 등 최소 역할만 담당하도록 정리했습니다.",
     ],
-    result: ["서버 부하 감소, 업로드 속도 개선", "대용량 파일 안정성 향상"],
+    result: [
+      "서버가 실제 파일 바이너리를 처리하지 않아 자원 사용이 줄고 부하가 감소했습니다.",
+      "업로드 속도가 개선되고 서버 네트워크 트래픽이 크게 줄었습니다.",
+      "대용량 파일 업로드에서도 안정적으로 동작하도록 개선했습니다.",
+    ],
   },
   {
     id: "monaco",
     title: "Monaco Editor 코드 제출 JSON 직렬화 문제",
-    tags: ["Monaco", "React"],
-    problem: ["특정 입력에서 JSON 파싱 오류로 제출 실패", "따옴표·줄바꿈·특수 문자 포함 시"],
-    cause: ["코드 문자열이 JSON 직렬화 과정에서 손상되어 파싱 오류 발생"],
-    solution: [
-      "코드 문자열을 Base64 인코딩하여 전송",
-      "서버에서 디코딩 후 저장·검증",
-      "Validation 및 예외처리 강화",
+    tags: ["Monaco", "React", "JSON", "Base64"],
+    problem: [
+      "LMS에서 학생이 코드를 제출할 때 Monaco Editor로 입력한 코드를 JSON 형식으로 서버에 전송합니다.",
+      "따옴표(\"\") 포함, 줄바꿈, 특수 문자 등이 있는 코드에서는 JSON 파싱 오류가 발생해 제출에 실패했습니다.",
     ],
-    result: ["직렬화 오류 해결, 제출 안정성 향상"],
+    cause: [
+      "코드 문자열이 JSON 직렬화 과정에서 깨지면서 파싱 오류가 났습니다.",
+      "예: 제출할 코드가 System.out.println(\"Hello\"); 일 때, JSON 객체에 그대로 넣으면 {\"code\": \"System.out.println(\"Hello\");\"}처럼 문자열 안의 큰따옴표가 JSON 구조를 깨뜨립니다.",
+    ],
+    solution: [
+      "전송 전 코드 문자열을 Base64로 인코딩한 뒤 JSON에 담아내도록 변경했습니다.",
+      "흐름: Monaco Editor 코드 → Base64 인코딩 → JSON 전송 → 서버에서 Base64 디코딩 → 정상 코드로 저장.",
+      "서버에서는 코드 길이 제한, 유효성 검사, 빈 코드 제출 방지 등 추가 검증을 두었습니다.",
+    ],
+    result: [
+      "JSON 직렬화·파싱 오류를 해결했습니다.",
+      "코드 제출 과정의 안정성이 높아졌습니다.",
+      "특수 문자·줄바꿈이 포함된 코드도 제출할 수 있게 되었습니다.",
+    ],
   },
   {
     id: "cors",
     title: "S3 파일 업로드 CORS 문제",
-    tags: ["AWS S3", "CORS"],
+    tags: ["AWS S3", "CORS", "Pre-signed URL"],
     problem: [
-      "브라우저에서 S3로 직접 업로드 시 CORS로 요청 차단 (Access to XMLHttpRequest has been blocked by CORS policy)",
+      "Pre-signed URL 방식으로 S3에 직접 업로드할 때 브라우저에서 업로드 요청이 차단되는 문제가 있었습니다.",
+      "오류 메시지: Access to XMLHttpRequest has been blocked by CORS policy",
     ],
-    cause: ["S3 버킷에 CORS 설정이 없어 교차 출처 업로드가 막힘"],
-    solution: ["버킷 CORS 정책 설정", "허용 Method: PUT, POST, GET", "허용 Origin/Headers 구성"],
-    result: ["브라우저 직접 업로드 정상화", "Pre-signed URL 흐름 안정화"],
+    cause: [
+      "요청 흐름이 Client(예: localhost) → AWS S3로 이어지는 교차 출처 요청입니다.",
+      "브라우저는 다른 도메인으로의 요청에 대해 CORS 설정이 없으면 요청을 막습니다.",
+      "S3 버킷에 CORS 설정이 없어 브라우저가 업로드를 차단했습니다.",
+    ],
+    solution: [
+      "S3 버킷에 CORS 정책을 설정했습니다.",
+      "브라우저 직접 업로드를 허용하도록 PUT, POST, GET 등 필요한 Method를 허용 목록에 포함했습니다.",
+      "요청을 허용하도록 Origin·Headers 등을 구성해 Pre-signed URL 업로드가 동작하도록 맞췄습니다.",
+    ],
+    result: [
+      "브라우저에서 S3로 직접 업로드할 수 있게 되었습니다.",
+      "파일 업로드 기능이 정상적으로 동작합니다.",
+      "Pre-signed URL 방식이 안정적으로 유지됩니다.",
+    ],
   },
 ]
 
 export const erpTroubleshooting: TroubleItem[] = [
   {
     id: "auth",
-    title: "로그인하지 않은 사용자의 보호 페이지 접근",
-    tags: ["Spring MVC", "Interceptor"],
-    problem: ["비로그인 상태에서 보호 페이지 URL 직접 입력 시 접근되는 이슈"],
-    cause: ["일부 컨트롤러에만 세션 검증이 적용되어 공통 인증 체계가 불일치"],
-    solution: ["Spring MVC HandlerInterceptor로 요청 전 단계에서 세션 로그인 여부를 공통 검증하도록 변경"],
-    result: ["비로그인 접근 차단", "인증 흐름 일관성 확보"],
+    title: "로그인하지 않은 사용자의 보호 페이지 접근 문제",
+    tags: ["Spring MVC", "Interceptor", "Session"],
+    problem: [
+      "ERP 시스템에 로그인 기능을 구현했으나, 로그인하지 않은 사용자가 브라우저 주소창에 관리자 페이지나 보호된 페이지의 URL을 직접 입력하여 접근할 수 있는 문제가 발생했습니다.",
+      "예를 들어 `/employee/list`, `/attendance/main` 등의 URL을 직접 입력하면 별도의 로그인 검증 없이 페이지가 표시되었습니다.",
+    ],
+    cause: [
+      "초기에는 각 컨트롤러에서 개별적으로 세션을 확인하는 방식으로 로그인 검증을 처리했습니다.",
+      "로그인 성공 시 세션에 사용자 정보를 저장하고, 이후 컨트롤러 동작 시 session.getAttribute()로 로그인 여부를 확인하는 구조였습니다.",
+      "이 방식의 문제점: (1) 로그인 검증 로직이 여러 컨트롤러에 분산됨, (2) 일부 컨트롤러에 로그인 확인 코드가 누락됨, (3) URL 직접 접근 시 인증 검증이 일관되게 수행되지 않음.",
+      "인증 로직이 일관되게 적용되지 않아 보안 취약점으로 이어졌습니다.",
+    ],
+    solution: [
+      "Spring MVC의 HandlerInterceptor 기능을 적용해 해결했습니다.",
+      "Interceptor는 컨트롤러가 실행되기 전에 요청을 가로채 처리할 수 있습니다.",
+      "(1) HandlerInterceptor 인터페이스를 구현하는 클래스를 작성하고, (2) preHandle() 메서드 안에서 로그인 상태를 확인하며, (3) 세션에 사용자 정보가 없으면 로그인 페이지로 리다이렉트합니다.",
+      "흐름: 사용자 요청 → Interceptor preHandle() → 세션 로그인 여부 확인 → 로그인된 경우(O) 컨트롤러 실행, 로그인되지 않은 경우(X) 로그인 페이지로 이동.",
+    ],
+    result: [
+      "로그인하지 않은 사용자의 보호 페이지 접근을 차단했습니다.",
+      "인증 검증 로직을 한곳에서 관리해 보안과 코드 유지보수성을 크게 개선했습니다.",
+    ],
   },
   {
     id: "dup",
-    title: "근태 관리 중복 출근 기록",
-    tags: ["MyBatis", "Transaction"],
-    problem: ["출근 버튼 반복 클릭 시 동일 날짜 출근 기록 중복 저장"],
-    cause: ["조회·저장이 단일 트랜잭션으로 묶이지 않아 동시 요청 시 중복 저장"],
-    solution: ["Service 계층에 트랜잭션 적용", "당일 출근 기록 존재 시 저장 제한"],
-    result: ["중복 방지로 데이터 일관성·근태 신뢰도 향상"],
+    title: "근태 관리에서 중복 출근 기록 문제",
+    tags: ["Spring", "Transaction", "MyBatis"],
+    problem: [
+      "근태 관리 기능에서 사용자가 출근 버튼을 여러 번 클릭하면 동일 날짜에 여러 건의 출근 기록이 저장되는 문제가 발생했습니다.",
+      "한 사용자가 하루에 여러 번 출근 처리된 것처럼 비정상 데이터가 쌓였습니다.",
+    ],
+    cause: [
+      "출근 기록 저장 로직이 버튼 클릭 시 즉시 데이터를 저장하도록만 구현되어 있었습니다.",
+      "(1) 동일 날짜에 이미 출근 기록이 있는지 검증하는 로직이 없었고, (2) 중복 요청이 들어올 경우 중복 저장이 가능했으며, (3) 조회(확인)와 저장 로직이 하나의 트랜잭션으로 묶이지 않았습니다.",
+      "조회와 저장이 원자적으로 처리되지 않아 데이터 무결성이 깨질 위험이 있었습니다.",
+    ],
+    solution: [
+      "Spring Transaction Management 기반의 트랜잭션 처리를 적용했습니다.",
+      "(1) Service 계층 메서드에 @Transactional을 적용하고, (2) 출근 처리 시 해당 날짜의 근태 기록을 먼저 조회한 뒤, (3) 이미 기록이 있으면 추가 저장을 제한합니다.",
+      "출근 버튼 클릭 → 당일 근태 기록 조회 → 기록이 없으면 저장, 있으면 출근 처리를 제한하는 흐름으로 정리했습니다.",
+      "조회와 저장을 하나의 트랜잭션으로 묶어 데이터 일관성을 유지하도록 개선했습니다.",
+    ],
+    result: [
+      "동일 날짜 중복 출근 기록 문제를 해결했습니다.",
+      "근태 데이터 무결성을 확보하고 시스템 안정성을 높였습니다.",
+    ],
   },
 ]
 
@@ -214,46 +278,122 @@ export type RoadmapRow = {
   problem: { bullets: string[] }
   direction: { bullets: string[] }
   effect: { bullets: string[] }
+  /** 미지정 시 UI 라벨은 "기대 효과" (ERP 개선점은 "사용 기술 예시") */
+  thirdColumnTitle?: string
 }
 
 export const lmsRoadmapRows: RoadmapRow[] = [
   {
-    title: "AI 기반 학습 추천",
-    problem: { bullets: ["학습 데이터는 누적되나 개인 맞춤 추천이 부족"] },
-    direction: { bullets: ["학습 데이터 기반 AI 추천 도입 (수강·과제·정답률·학습시간 등)"] },
-    effect: { bullets: ["맞춤 학습", "효율 향상", "플랫폼 사용률 증가"] },
+    title: "AI 기반 학습 추천 기능 (서비스 확장)",
+    problem: {
+      bullets: [
+        "LMS에서 학생의 학습 데이터는 지속적으로 쌓이지만, 현재는 단순 강의 수강 중심 구조로 개인 맞춤 학습 기능이 부족합니다.",
+      ],
+    },
+    direction: {
+      bullets: [
+        "학생 학습 데이터를 활용한 AI 추천 시스템을 도입합니다.",
+        "활용 가능한 데이터 예시: 강의 수강 이력, 과제 제출 패턴, 문제 정답률, 학습 시간 등.",
+        "추천 기능 예시: 학생 A가 자료구조 강의를 많이 수강한 경우 → 알고리즘 관련 강의를 추천.",
+      ],
+    },
+    effect: {
+      bullets: [
+        "개인 맞춤형 학습 경험을 제공할 수 있습니다.",
+        "학습 효율을 높일 수 있습니다.",
+        "플랫폼 사용률·재방문을 높이는 데 기여할 수 있습니다.",
+      ],
+    },
   },
   {
-    title: "코드 자동 채점",
-    problem: { bullets: ["코드 제출은 가능하나 자동 채점 부재로 교수자 부담"] },
-    direction: { bullets: ["Docker Sandbox, Judge0 등으로 자동 채점 시스템 도입"] },
-    effect: { bullets: ["채점 부담 감소", "실시간 피드백", "코딩 교육 기능 강화"] },
+    title: "코드 자동 채점 기능 (교육 플랫폼 기능 강화)",
+    thirdColumnTitle: "사용 기술 예시",
+    problem: {
+      bullets: [
+        "현재는 코드 제출만 가능하고 자동 채점 기능이 없어, 교수자가 코드를 직접 확인해야 합니다.",
+      ],
+    },
+    direction: {
+      bullets: [
+        "코드를 실행하고 자동으로 채점하는 시스템을 도입합니다.",
+        "기대 효과: 교수자의 채점 부담 감소, 학생에게 실시간 피드백 제공, 코딩 교육 플랫폼으로서의 기능 강화.",
+      ],
+    },
+    effect: {
+      bullets: ["Docker Sandbox", "Judge0 API", "컨테이너 기반 코드 실행"],
+    },
   },
   {
-    title: "실시간 알림",
-    problem: { bullets: ["공지·과제 등록 시 학생이 직접 확인해야 해 누락 가능"] },
-    direction: { bullets: ["WebSocket·Redis Pub/Sub 기반 실시간 알림"] },
-    effect: { bullets: ["UX 개선", "확인율 증가"] },
+    title: "실시간 알림 시스템",
+    thirdColumnTitle: "사용 기술 예시",
+    problem: {
+      bullets: [
+        "공지사항·과제 등록 후 학생이 직접 시스템에 들어가 확인해야 해, 확인이 누락되기 쉽습니다.",
+      ],
+    },
+    direction: {
+      bullets: [
+        "WebSocket 기반 실시간 알림 시스템을 도입합니다.",
+        "예시 흐름: 교수자가 과제 등록 → 알림 서버 → 학생 브라우저에 실시간 알림 표시.",
+        "기대 효과: 사용자 경험(UX) 개선, 과제·공지 확인률 증가.",
+      ],
+    },
+    effect: {
+      bullets: ["WebSocket", "Redis Pub/Sub"],
+    },
   },
 ]
 
 export const erpRoadmapRows: RoadmapRow[] = [
   {
-    title: "실시간 알림",
-    problem: { bullets: ["전자결재·공지 시 사용자가 직접 접속해 확인해야 함"] },
-    direction: { bullets: ["WebSocket·STOMP 기반 즉시 알림"] },
-    effect: { bullets: ["업무 지연 감소", "응답 속도 향상"] },
+    title: "실시간 알림 기능",
+    thirdColumnTitle: "사용 기술 예시",
+    problem: {
+      bullets: [
+        "전자결재 요청이나 공지사항 등록 시 사용자가 직접 시스템에 접속해야 확인할 수 있어 업무 처리 속도가 느려질 수 있습니다.",
+      ],
+    },
+    direction: {
+      bullets: [
+        "실시간 알림 시스템을 도입하여 결재 요청, 승인, 반려 등의 이벤트 발생 시 사용자에게 즉시 알림을 제공합니다.",
+      ],
+    },
+    effect: {
+      bullets: ["WebSocket", "STOMP 기반 메시지 처리"],
+    },
   },
   {
-    title: "데이터 시각화",
-    problem: { bullets: ["근태·결재 현황이 리스트 중심이라 파악이 어려움"] },
-    direction: { bullets: ["Chart.js 등으로 관리자 대시보드 시각화"] },
-    effect: { bullets: ["의사결정 속도 향상"] },
+    title: "데이터 시각화 기능",
+    thirdColumnTitle: "사용 기술 예시",
+    problem: {
+      bullets: [
+        "근태 관리나 결재 현황 데이터가 단순 리스트 형태로 제공되어 전체 현황을 한눈에 파악하기 어렵습니다.",
+      ],
+    },
+    direction: {
+      bullets: [
+        "관리자 대시보드를 구축하여 근태 현황, 결재 진행 상태, 직원 통계를 그래프 형태로 시각화합니다.",
+      ],
+    },
+    effect: {
+      bullets: ["Chart.js", "관리자 대시보드 UI"],
+    },
   },
   {
-    title: "파일 첨부",
-    problem: { bullets: ["전자결재 시 자료 첨부 불가로 활용도 제한"] },
-    direction: { bullets: ["S3·Multipart로 문서·파일 함께 관리"] },
-    effect: { bullets: ["실무 활용도 향상"] },
+    title: "파일 첨부 기능",
+    thirdColumnTitle: "사용 기술 예시",
+    problem: {
+      bullets: [
+        "전자결재 문서 작성 시 관련 자료나 문서를 첨부할 수 없어 실제 업무 환경에서 활용도가 제한적입니다.",
+      ],
+    },
+    direction: {
+      bullets: [
+        "전자결재 문서에 파일 업로드 및 다운로드 기능을 추가하여 다양한 업무 문서를 함께 관리할 수 있도록 확장합니다.",
+      ],
+    },
+    effect: {
+      bullets: ["Amazon Web Services S3", "Multipart File Upload"],
+    },
   },
 ]

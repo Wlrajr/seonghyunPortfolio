@@ -3,12 +3,17 @@
 import Link from "next/link"
 import { ArrowLeft } from "lucide-react"
 import { useEffect, useRef, useState, type ReactNode } from "react"
+import {
+  DetailPageTopNav,
+  detailFloatingBackTopClass,
+  detailPageMainPaddingClass,
+} from "@/components/detail-page-top-nav"
 import { introductionCardClass } from "@/lib/introduction-ui"
 import { SectionScrollRail, type SectionNavItem } from "@/components/section-scroll-rail"
 import { activeSectionIdForScroll, cn } from "@/lib/utils"
 
 const floatingBackClass =
-  "fixed left-[max(1rem,env(safe-area-inset-left))] top-[max(1rem,env(safe-area-inset-top))] z-50 inline-flex max-w-[calc(100vw-2.5rem)] items-center gap-2 rounded-full border border-slate-200/70 bg-white/55 px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-xl transition-[opacity,transform] duration-200 hover:border-sky-300/80 hover:bg-white/80 hover:text-sky-900"
+  `fixed left-[max(1rem,env(safe-area-inset-left))] ${detailFloatingBackTopClass} z-[45] inline-flex max-w-[calc(100vw-2.5rem)] items-center gap-2 rounded-full border border-slate-200/70 bg-white/55 px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-xl transition-[opacity,transform] duration-200 hover:border-sky-300/80 hover:bg-white/80 hover:text-sky-900`
 
 export function IntroductionScrollBackLayout({
   title,
@@ -46,7 +51,7 @@ export function IntroductionScrollBackLayout({
     if (ids.length === 0) return
 
     const updateActive = () => {
-      const next = activeSectionIdForScroll(ids, { beforeFirstPadding: 120 })
+      const next = activeSectionIdForScroll(ids, { beforeFirstPadding: 140 })
       setActiveSection((prev) => (prev === next ? prev : next))
     }
 
@@ -61,6 +66,11 @@ export function IntroductionScrollBackLayout({
 
   return (
     <>
+      <DetailPageTopNav
+        items={sectionNav}
+        drawerTitle="자기소개 목차"
+        menuId="introduction-mobile-section-nav"
+      />
       <Link
         href="/"
         tabIndex={backLinkPinned ? 0 : -1}
@@ -78,7 +88,12 @@ export function IntroductionScrollBackLayout({
       {sectionNav.length > 0 ? (
         <SectionScrollRail items={sectionNav} activeId={activeSection} ariaLabel="자기소개 섹션 이동" />
       ) : null}
-      <div className="relative px-4 py-10 sm:px-5 sm:py-12 md:px-10 md:py-14 lg:px-12 lg:py-16 lg:pl-52 xl:pl-60">
+      <div
+        className={cn(
+          "relative px-4 sm:px-5 md:px-10 lg:px-12",
+          detailPageMainPaddingClass,
+        )}
+      >
         <div className="mx-auto w-full max-w-3xl space-y-5 sm:space-y-6 md:space-y-8">
           <header className={introductionCardClass}>
             <div ref={backLinkAnchorRef}>

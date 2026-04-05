@@ -16,6 +16,11 @@ import {
   type LucideIcon,
 } from "lucide-react"
 import { Background3D } from "@/components/background-3d"
+import {
+  DetailPageTopNav,
+  detailFloatingBackTopClass,
+  detailPageMainPaddingClass,
+} from "@/components/detail-page-top-nav"
 import { SectionScrollRail } from "@/components/section-scroll-rail"
 import { Accordion, AccordionContent, AccordionItem, AccordionTrigger } from "@/components/ui/accordion"
 import type { Project } from "@/lib/projects"
@@ -49,8 +54,11 @@ const detailSectionNav = [
   { id: "pd-roadmap", label: "개선 / 확장" },
 ] as const
 
+/** 본문·히어로·Links 공통: 동일 max-width·가운데 정렬 (좌우 여백은 페이지 래퍼 px와 맞춤) */
+const detailContentShell = "mx-auto w-full max-w-4xl"
+
 const detailHero =
-  "relative overflow-hidden border-y border-slate-200/80 bg-transparent p-4 shadow-none ring-0 sm:p-6 md:p-8"
+  "relative overflow-hidden border-y border-slate-200/80 bg-transparent py-6 shadow-none ring-0 sm:py-8 md:py-10"
 
 function RevealSection({ children, className }: { children: ReactNode; className?: string }) {
   const ref = useRef<HTMLDivElement>(null)
@@ -403,7 +411,12 @@ function RoadmapRowCard({ row }: { row: RoadmapRow }) {
         <Arrow />
         <Cell step="02" title="개선 방향" accent="sky" bullets={row.direction.bullets} />
         <Arrow />
-        <Cell step="03" title="기대 효과" accent="cyan" bullets={row.effect.bullets} />
+        <Cell
+          step="03"
+          title={row.thirdColumnTitle ?? "기대 효과"}
+          accent="cyan"
+          bullets={row.effect.bullets}
+        />
       </div>
     </div>
   )
@@ -451,7 +464,7 @@ function DetailSection({
     <section
       id={id}
       className={cn(
-        "scroll-mt-24 border-t border-slate-200/35 py-14 md:scroll-mt-28 md:py-20",
+        "scroll-mt-28 border-t border-slate-200/35 py-14 md:scroll-mt-32 md:py-20",
         first && "border-t-0 pt-2",
       )}
     >
@@ -461,7 +474,7 @@ function DetailSection({
 }
 
 const backLinkFloatingClass =
-  "fixed left-[max(1rem,env(safe-area-inset-left))] top-[max(1rem,env(safe-area-inset-top))] z-50 inline-flex max-w-[calc(100vw-2.5rem)] items-center gap-2 rounded-full border border-slate-200/70 bg-white/55 px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-xl transition-[opacity,transform] duration-200 hover:border-sky-300/80 hover:bg-white/80 hover:text-sky-900"
+  `fixed left-[max(1rem,env(safe-area-inset-left))] ${detailFloatingBackTopClass} z-[45] inline-flex max-w-[calc(100vw-2.5rem)] items-center gap-2 rounded-full border border-slate-200/70 bg-white/55 px-3.5 py-2 text-sm font-medium text-slate-700 shadow-sm backdrop-blur-xl transition-[opacity,transform] duration-200 hover:border-sky-300/80 hover:bg-white/80 hover:text-sky-900`
 
 export function ProjectDetailView({ project }: { project: Project }) {
   const [activeSection, setActiveSection] = useState("")
@@ -491,7 +504,7 @@ export function ProjectDetailView({ project }: { project: Project }) {
   useEffect(() => {
     const ids = detailSectionNav.map((s) => s.id)
     const updateActive = () => {
-      const next = activeSectionIdForScroll(ids, { beforeFirstPadding: 120 })
+      const next = activeSectionIdForScroll(ids, { beforeFirstPadding: 140 })
       setActiveSection((prev) => (prev === next ? prev : next))
     }
     updateActive()
@@ -510,9 +523,21 @@ export function ProjectDetailView({ project }: { project: Project }) {
   ]
 
   const kpiErp = [
-    { value: "인증", unit: "일관", desc: "Interceptor 기반 세션 검증" },
-    { value: "중복", unit: "방지", desc: "근태 트랜잭션·제약으로 정합성" },
-    { value: "모듈", unit: "ERP", desc: "회원·근태·게시·결재 업무 통합" },
+    {
+      value: "인증",
+      unit: "일관",
+      desc: "Spring Interceptor로 보호 URL 접근을 일원화해 세션 검증 누락·URL 직접 접근을 방지했습니다.",
+    },
+    {
+      value: "중복",
+      unit: "방지",
+      desc: "근태 출근 처리에 트랜잭션·당일 기록 조회를 적용해 동일 일자 중복 저장을 막고 정합성을 확보했습니다.",
+    },
+    {
+      value: "모듈",
+      unit: "ERP",
+      desc: "회원·직원·근태·게시·전자결재를 한 웹 시스템에 묶어 업무 흐름이 끊기지 않도록 구현했습니다.",
+    },
   ]
 
   const resultsLmsLeft = [
@@ -532,9 +557,36 @@ export function ProjectDetailView({ project }: { project: Project }) {
     "DB 모델링/ERD 기반으로 테이블 구조를 정리해 기능 확장에 대응 가능한 기반을 마련했습니다.",
   ]
 
+  const resultsErpLeft = [
+    "Interceptor를 도입해 로그인하지 않은 사용자의 보호 페이지 접근을 차단하고, 인증 검증을 한곳에서 관리할 수 있게 했습니다.",
+    "근태 관리에서 중복 출근 기록 문제를 트랜잭션과 사전 조회 로직으로 해결해 데이터 무결성과 안정성을 높였습니다.",
+    "JSP 화면과 Spring MVC·MyBatis 백엔드를 맞춰 로그인·회원·공지·근태 등 핵심 기능을 일관된 구조로 구현했습니다.",
+  ]
+  const resultsErpRight = [
+    "엑셀·개별 도구에 흩어지기 쉬운 인사·근태·공지·결재를 하나의 ERP 웹 시스템에서 연속된 흐름으로 다룰 수 있게 했습니다.",
+    "회원·직원 정보와 근태 기록을 연계해 관리자가 조직 단위로 현황을 파악하기 쉬운 구조를 마련했습니다.",
+    "게시판과 전자결재로 사내 소통과 휴가·결재 요청·승인·반려 처리를 웹 기반으로 표준화했습니다.",
+  ]
+  const resultsErpWide = [
+    "화면단 기획과 스토리보드 총괄을 포함해 요구사항 정리부터 구현·발표까지 프로젝트 전 과정에 참여했습니다.",
+    "게시글 CRUD, 유효성 검사, 예외 처리로 잘못된 입력과 오류 상황을 줄이고 코드 가독성·유지보수성을 높였습니다.",
+    "Google 지도·메일 API 연동으로 이메일 인증 등 실무에 가까운 외부 연동 경험을 쌓았습니다.",
+    "Git/GitHub 형상관리로 변경 이력을 관리하고 협업 시 충돌을 줄이는 방식을 익혔습니다.",
+  ]
+
   return (
     <div className="relative min-h-screen isolate overflow-x-hidden text-slate-900">
       <Background3D />
+      <DetailPageTopNav
+        items={[...detailSectionNav]}
+        drawerTitle="프로젝트 섹션"
+        rightLabel={
+          <span className="font-mono text-xs uppercase tracking-[0.16em] text-slate-500">
+            Project {project.id}
+          </span>
+        }
+        menuId="project-detail-mobile-nav"
+      />
       <SectionScrollRail items={[...detailSectionNav]} activeId={activeSection} ariaLabel="프로젝트 섹션 이동" />
       <Link
         href="/"
@@ -548,10 +600,20 @@ export function ProjectDetailView({ project }: { project: Project }) {
         <ArrowLeft className="h-4 w-4 shrink-0" aria-hidden />
         <span className="truncate sm:whitespace-nowrap">포트폴리오로 돌아가기</span>
       </Link>
-      <div className="relative px-4 py-10 sm:px-5 sm:py-12 md:px-10 md:py-14 lg:px-12 lg:py-16 lg:pl-52 xl:pl-60">
+      <div
+        className={cn(
+          "relative px-4 sm:px-5 md:px-8 lg:px-10 xl:px-12",
+          detailPageMainPaddingClass,
+        )}
+      >
         <div className="mx-auto w-full max-w-6xl min-w-0">
           <RevealSection>
-            <div className="mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4">
+            <div
+              className={cn(
+                detailContentShell,
+                "mb-6 flex flex-col gap-3 sm:mb-8 sm:flex-row sm:items-center sm:justify-between sm:gap-4",
+              )}
+            >
               <div ref={backLinkAnchorRef} className="min-w-0">
                 <Link
                   href="/"
@@ -576,61 +638,71 @@ export function ProjectDetailView({ project }: { project: Project }) {
                   className="pointer-events-none absolute inset-0 bg-[radial-gradient(circle_at_20%_0%,rgba(56,189,248,0.12),transparent_55%),linear-gradient(180deg,rgba(255,255,255,0.35),transparent)]"
                 />
                 <div className="relative z-10">
-                  <div className="flex flex-wrap items-center gap-3">
-                    <span className="inline-flex items-center rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-900 ring-1 ring-sky-200/70">
-                      {projectName}
-                    </span>
-                    <span className="text-xs font-medium text-slate-500">Project</span>
-                  </div>
+                  <div className={detailContentShell}>
+                    <div className="flex flex-wrap items-center gap-3">
+                      <span className="inline-flex items-center rounded-full bg-sky-50 px-3 py-1 text-xs font-semibold text-sky-900 ring-1 ring-sky-200/70">
+                        {projectName}
+                      </span>
+                      <span className="text-xs font-medium text-slate-500">Project</span>
+                    </div>
 
-                  {isLms ? (
-                    <>
-                      <h1 className="font-display mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-3xl sm:leading-snug md:text-4xl lg:text-5xl">
-                        무중단 통합 교육관 관리 시스템
-                      </h1>
-                      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-base md:text-lg">
-                        통합 학사운영을 위한, 클라우드 기반 교육관 관리 프로그램
-                      </p>
-                      <div className="mt-5 flex justify-center sm:mt-6 sm:justify-start">
-                        <div className="relative h-[min(11rem,48vw)] w-full max-w-full rounded-[1.25rem] border border-sky-200/40 bg-white/30 p-4 shadow-none backdrop-blur-md ring-0 sm:h-[160px] sm:max-w-[360px] sm:rounded-[1.5rem] sm:p-5 md:h-[190px] md:max-w-[460px]">
-                          <Image src="/lmsync-logo.png" alt="LMSync Logo" fill className="object-contain" priority />
-                        </div>
-                      </div>
-                    </>
-                  ) : (
-                    <>
-                      <h1 className="font-display mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-3xl sm:leading-snug md:text-4xl lg:text-5xl">
-                        {project.title}
-                      </h1>
-                      <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-base md:text-lg">
-                        기업의 핵심 업무 프로세스를 통합 관리 플랫폼
-                      </p>
-                      <div className="mt-5 flex justify-center sm:mt-6 sm:justify-start">
-                        <div className="relative h-[min(14rem,58vw)] w-full max-w-full rounded-[1.25rem] border border-sky-200/40 bg-white/30 p-3 shadow-none backdrop-blur-md ring-0 sm:h-[220px] sm:max-w-[380px] sm:rounded-[1.5rem] sm:p-4 md:h-[260px] md:max-w-[500px]">
+                    {isLms ? (
+                      <>
+                        <h1 className="font-display mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-3xl sm:leading-snug md:text-4xl lg:text-5xl">
+                          무중단 통합 교육관 관리 시스템
+                        </h1>
+                        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-base md:text-lg">
+                          통합 학사운영을 위한, 클라우드 기반 교육관 관리 프로그램
+                        </p>
+                      </>
+                    ) : (
+                      <>
+                        <h1 className="font-display mt-5 text-2xl font-semibold leading-tight tracking-[-0.03em] sm:mt-6 sm:text-3xl sm:leading-snug md:text-4xl lg:text-5xl">
+                          {project.title}
+                        </h1>
+                        <p className="mt-4 max-w-2xl text-sm leading-relaxed text-slate-600 sm:mt-5 sm:text-base md:text-lg">
+                          기업의 핵심 업무 프로세스를 통합 관리 플랫폼
+                        </p>
+                      </>
+                    )}
+
+                    <div className="relative mt-5 w-full sm:mt-6">
+                      <div className="relative aspect-[2/1] w-full min-h-[11rem] overflow-hidden rounded-2xl border border-sky-200/50 bg-slate-200/40 shadow-none ring-1 ring-sky-100/40 sm:min-h-[13rem] md:aspect-[2.2/1] md:min-h-[15rem]">
+                        {isLms ? (
+                          <Image
+                            src="/lmsync-logo.png"
+                            alt="LMSync Logo"
+                            fill
+                            className="object-cover"
+                            priority
+                            sizes="(max-width: 1024px) min(100vw, 896px), 896px"
+                          />
+                        ) : (
                           <Image
                             src="/erp-main.png"
                             alt="ERP 통합 업무 시스템 개념 일러스트"
                             fill
-                            className="object-contain p-2 sm:p-3"
+                            className="object-cover"
                             priority
+                            sizes="(max-width: 1024px) min(100vw, 896px), 896px"
                           />
-                        </div>
+                        )}
                       </div>
-                    </>
-                  )}
+                    </div>
+                  </div>
                 </div>
               </header>
 
               <div className="mt-4 space-y-0">
                 <DetailSection id="pd-overview" first>
-                  <RevealSection className="mx-auto max-w-4xl px-1 md:px-0">
+                  <RevealSection className={detailContentShell}>
                     <SectionTitle title="프로젝트 개요" />
                     <p className="mt-6 max-w-3xl text-sm leading-7 text-slate-600 md:text-base">{project.overview}</p>
                   </RevealSection>
                 </DetailSection>
 
                 <DetailSection id="pd-background">
-                  <RevealSection className="mx-auto max-w-4xl px-1 md:px-0">
+                  <RevealSection className={detailContentShell}>
                     <SectionTitle title="프로젝트 배경 / 문제" />
                     {isLms ? (
                       <BgProblemBlocks />
@@ -648,7 +720,7 @@ export function ProjectDetailView({ project }: { project: Project }) {
                 </DetailSection>
 
                 <DetailSection id="pd-architecture">
-                  <RevealSection className="mx-auto max-w-4xl px-1 md:px-0">
+                  <RevealSection className={detailContentShell}>
                     <SectionTitle title="시스템 아키텍처" />
                     {isLms ? (
                       <ArchitecturePanel
@@ -667,14 +739,14 @@ export function ProjectDetailView({ project }: { project: Project }) {
                 </DetailSection>
 
                 <DetailSection id="pd-features">
-                  <RevealSection className="mx-auto max-w-4xl px-1 md:px-0">
+                  <RevealSection className={detailContentShell}>
                     <SectionTitle title="주요 기능" />
                     <FeatureZigzag blocks={isLms ? lmsFeatureBlocks : erpFeatureBlocks} />
                   </RevealSection>
                 </DetailSection>
 
                 <DetailSection id="pd-roles">
-                  <RevealSection className="mx-auto max-w-4xl px-1 md:px-0">
+                  <RevealSection className={detailContentShell}>
                     <SectionTitle title="내가 맡은 역할" />
                     <RolesBlock
                       tech={isLms ? lmsRolesTech : erpRolesTech}
@@ -684,26 +756,30 @@ export function ProjectDetailView({ project }: { project: Project }) {
                 </DetailSection>
 
                 <DetailSection id="pd-troubleshooting">
-                  <RevealSection className="mx-auto max-w-4xl px-1 md:px-0">
+                  <RevealSection className={detailContentShell}>
                     <SectionTitle title="트러블슈팅" />
                     <TroubleshootingAccordion items={isLms ? lmsTroubleshooting : erpTroubleshooting} />
                   </RevealSection>
                 </DetailSection>
 
                 <DetailSection id="pd-results">
-                  <RevealSection className="mx-auto max-w-4xl px-1 md:px-0">
+                  <RevealSection className={detailContentShell}>
                     <SectionTitle title="결과 및 성과" />
-                    <div className="mt-8 grid gap-4 md:grid-cols-3">
+                    <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-[minmax(0,1fr)_minmax(0,1fr)_minmax(0,1fr)] sm:gap-5 sm:items-stretch">
                       {(isLms ? kpiLms : kpiErp).map((k) => (
                         <div
                           key={k.desc}
-                          className="rounded-2xl border border-sky-200/50 bg-white/35 p-6 text-center shadow-none backdrop-blur-md"
+                          className="flex h-full min-h-0 min-w-0 flex-col rounded-2xl border border-sky-200/50 bg-white/35 px-5 py-5 text-center shadow-none backdrop-blur-md sm:px-5 sm:py-6"
                         >
-                          <p className="font-display text-[48px] font-bold leading-none tracking-tight text-slate-900">
+                          <p className="font-display text-2xl font-bold leading-tight tracking-tight text-slate-900 sm:text-[1.625rem] md:text-[1.75rem]">
                             {k.value}
                           </p>
-                          <p className="mt-1 text-sm font-semibold text-sky-600">{k.unit}</p>
-                          <p className="mt-3 text-sm text-slate-600">{k.desc}</p>
+                          <p className="mt-2 text-sm font-semibold leading-snug text-sky-600 md:text-[0.9375rem]">
+                            {k.unit}
+                          </p>
+                          <p className="mt-3 text-pretty text-sm leading-relaxed text-slate-600 md:text-[0.9375rem] md:leading-7">
+                            {k.desc}
+                          </p>
                         </div>
                       ))}
                     </div>
@@ -731,21 +807,27 @@ export function ProjectDetailView({ project }: { project: Project }) {
                         </div>
                       </div>
                     ) : (
-                      <div className="mt-10 space-y-6 text-sm text-emerald-700 md:text-base">
-                        <ul className="space-y-2">
-                          <li className="flex gap-2">
-                            <span className="text-emerald-500">✓</span>
-                            사내 직원·근태·공지 ERP 웹 시스템 설계 및 구현
-                          </li>
-                          <li className="flex gap-2">
-                            <span className="text-emerald-500">✓</span>
-                            Interceptor 기반 세션 검증으로 보호 페이지 접근 제어
-                          </li>
-                          <li className="flex gap-2">
-                            <span className="text-emerald-500">✓</span>
-                            MyBatis·정규화 DB로 조회·관리 효율 및 유지보수성 향상
-                          </li>
-                        </ul>
+                      <div className="mt-10 grid gap-8 border-t border-blue-100/80 pt-10 md:grid-cols-2">
+                        <div className="md:border-r md:border-blue-100/80 md:pr-8">
+                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-700 md:text-base">
+                            {resultsErpLeft.map((t) => (
+                              <li key={t} className="flex gap-2">
+                                <span className="shrink-0 text-emerald-500">✓</span>
+                                <span>{t}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
+                        <div className="md:pl-8">
+                          <ul className="space-y-3 text-sm leading-relaxed text-emerald-700 md:text-base">
+                            {resultsErpRight.map((t) => (
+                              <li key={t} className="flex gap-2">
+                                <span className="shrink-0 text-emerald-500">✓</span>
+                                <span>{t}</span>
+                              </li>
+                            ))}
+                          </ul>
+                        </div>
                       </div>
                     )}
                     {isLms ? (
@@ -757,12 +839,21 @@ export function ProjectDetailView({ project }: { project: Project }) {
                           </li>
                         ))}
                       </ul>
-                    ) : null}
+                    ) : (
+                      <ul className="mt-8 grid gap-2 border-t border-blue-100/80 pt-8 text-sm leading-relaxed text-emerald-700 md:grid-cols-2 md:text-base">
+                        {resultsErpWide.map((t) => (
+                          <li key={t} className="flex gap-2">
+                            <span className="shrink-0 text-emerald-500">✓</span>
+                            <span>{t}</span>
+                          </li>
+                        ))}
+                      </ul>
+                    )}
                   </RevealSection>
                 </DetailSection>
 
                 <DetailSection id="pd-roadmap">
-                  <RevealSection className="mx-auto max-w-4xl px-1 md:px-0">
+                  <RevealSection className={detailContentShell}>
                     <SectionTitle title="개선점/확장 방향" />
                     <div className="mt-8">
                       {(isLms ? lmsRoadmapRows : erpRoadmapRows).map((row) => (
@@ -774,13 +865,13 @@ export function ProjectDetailView({ project }: { project: Project }) {
               </div>
             </div>
 
-            <aside className="self-start lg:sticky lg:top-24">
+            <aside className={cn("self-start", detailContentShell, "lg:sticky lg:top-28")}>
               <RevealSection>
-                <div className="rounded-2xl border border-slate-200/55 bg-white/40 p-5 shadow-none backdrop-blur-md">
+                <div className="rounded-2xl border border-slate-200/55 bg-white/40 p-6 shadow-none backdrop-blur-md">
                   <h3 className="border-l-4 border-[#3B82F6] pl-3 font-display text-[22px] font-bold text-slate-900">
                     Links
                   </h3>
-                  <div className="mt-5 space-y-3">
+                  <div className="mt-6 space-y-3">
                     <LinkCard
                       href={project.presentationUrl}
                       title="발표 자료 (PPT)"

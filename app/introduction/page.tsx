@@ -20,7 +20,7 @@ export default function IntroductionPage() {
           <article
             key={`${section.heading}-${idx}`}
             id={sectionNav[idx].id}
-            className={`${introductionCardClass} scroll-mt-24 md:scroll-mt-28`}
+            className={`${introductionCardClass} scroll-mt-28 md:scroll-mt-32`}
           >
             <h2 className="font-display text-lg font-semibold tracking-[-0.02em] text-slate-900 md:text-xl">
               {section.heading}
