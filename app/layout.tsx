@@ -19,9 +19,9 @@ function siteMetadataBase(): URL {
   return new URL('http://localhost:3000')
 }
 
-/** 링크 미리보기(OG)에 `app/icon.png`와 동일한 이미지 사용 */
-const ogIcon = {
-  url: '/icon.png',
+/** 링크 미리보기(OG) — `public/og-image.png` (SH 로고) */
+const ogImage = {
+  url: '/og-image.png',
   width: 394,
   height: 254,
   type: 'image/png',
@@ -38,13 +38,13 @@ export const metadata: Metadata = {
     siteName: '최성현 포트폴리오',
     title: '최성현 포트폴리오',
     description: '신입 풀스택 개발자 최성현의 포트폴리오입니다.',
-    images: [ogIcon],
+    images: [ogImage],
   },
   twitter: {
     card: 'summary_large_image',
     title: '최성현 포트폴리오',
     description: '신입 풀스택 개발자 최성현의 포트폴리오입니다.',
-    images: [ogIcon.url],
+    images: [ogImage.url],
   },
 }
 
