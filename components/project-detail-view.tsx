@@ -182,29 +182,46 @@ function ArchitecturePanel({
 }
 
 function FeatureZigzag({ blocks }: { blocks: FeatureBlock[] }) {
+  const rightBorderMap: Record<string, string> = {
+    "border-l-blue-500": "border-r-blue-500",
+    "border-l-emerald-500": "border-r-emerald-500",
+    "border-l-violet-500": "border-r-violet-500",
+    "border-l-orange-500": "border-r-orange-500",
+    "border-l-pink-500": "border-r-pink-500",
+    "border-l-red-500": "border-r-red-500",
+    "border-l-slate-400": "border-r-slate-400",
+    "border-l-sky-500": "border-r-sky-500",
+  }
+
   return (
     <div className="relative mt-8">
       <div
-        className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-slate-200 md:block"
+        className="absolute left-1/2 top-0 hidden h-full w-px -translate-x-1/2 bg-gradient-to-b from-sky-300/90 via-violet-300/85 to-cyan-300/90 md:block"
         aria-hidden
       />
       <div className="space-y-12 md:space-y-16">
         {blocks.map((block, i) => {
           const left = i % 2 === 0
           const Icon = block.Icon
+          const sideBorderClass = left
+            ? block.borderClass
+            : (rightBorderMap[block.borderClass] ?? "border-r-sky-500")
           return (
             <RevealStagger key={block.title} index={i} className="relative">
               <div
                 className={cn(
-                  "flex flex-col gap-6 md:flex-row md:items-start",
+                  "flex flex-col gap-7 md:flex-row md:items-center md:px-4",
                   left ? "md:flex-row" : "md:flex-row-reverse",
                 )}
               >
-                <div className="flex-1 md:w-[calc(50%-2rem)]">
+                <div className={cn("flex-1 md:w-[calc(50%-3.6rem)]", left ? "md:pr-8" : "md:pl-8")}>
                   <div
                     className={cn(
-                      "rounded-xl border-0 border-l-[3px] border-solid bg-white/82 py-4 pl-4 pr-4 shadow-none backdrop-blur-md transition-all duration-300 md:py-5 md:pl-5",
-                      block.borderClass,
+                      "rounded-xl border-0 border-solid bg-white/82 py-4 pl-4 pr-4 shadow-none backdrop-blur-md transition-all duration-300 md:py-5 md:pl-5",
+                      left
+                        ? "border-l-[3px]"
+                        : "border-r-[3px] md:pr-5",
+                      sideBorderClass,
                     )}
                   >
                     <h3 className="font-display text-lg font-bold text-text-heading">{block.title}</h3>
@@ -219,12 +236,12 @@ function FeatureZigzag({ blocks }: { blocks: FeatureBlock[] }) {
                   </div>
                 </div>
                 <div
-                  className="relative z-10 mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-slate-200/70 bg-white/70 shadow-sm backdrop-blur-sm md:absolute md:left-1/2 md:top-6 md:-translate-x-1/2"
+                  className="relative z-10 mx-auto flex h-12 w-12 shrink-0 items-center justify-center rounded-full border-2 border-sky-200/90 bg-white shadow-sm backdrop-blur-sm md:absolute md:left-1/2 md:top-1/2 md:-translate-x-1/2 md:-translate-y-1/2"
                   aria-hidden
                 >
                   <Icon className="h-5 w-5 text-text-muted" />
                 </div>
-                <div className="hidden flex-1 md:block md:w-[calc(50%-2rem)]" aria-hidden />
+                <div className="hidden flex-1 md:block md:w-[calc(50%-3.6rem)]" aria-hidden />
               </div>
             </RevealStagger>
           )
@@ -673,7 +690,7 @@ export function ProjectDetailView({ project }: { project: Project }) {
                             src="/lmsync-logo.png"
                             alt="LMSync Logo"
                             fill
-                            className="object-cover"
+                            className="object-contain p-3 sm:p-4 md:p-5"
                             priority
                             sizes="(max-width: 1024px) min(100vw, 896px), 896px"
                           />

@@ -79,50 +79,23 @@ export type StackCategory = {
 export const techStackCategories: StackCategory[] = [
   {
     name: "Backend",
-    items: [
-      "Java",
-      "JSP/Servlet",
-      "Spring Boot",
-      "MyBatis",
-      "JPA",
-    ],
+    items: ["Java", "Spring Boot", "JPA", "MyBatis"],
   },
   {
     name: "Frontend",
-    items: ["HTML5", "CSS3", "JavaScript", "jQuery", "Ajax", "React.js"],
+    items: ["React.js", "JavaScript", "HTML5", "CSS3"],
   },
   {
     name: "Database",
-    items: ["MySQL", "MariaDB"],
+    items: ["MySQL", "MariaDB", "MongoDB"],
   },
   {
     name: "Infra & DevOps",
-    items: [
-      "AWS",
-      "Docker",
-      "MSA",
-      "Apache Tomcat",
-      "Nginx",
-      "Git",
-      "GitHub",
-      "Git Bash",
-      "DockerHub",
-    ],
+    items: ["Docker", "AWS", "Nginx"],
   },
   {
     name: "Tools",
-    items: [
-      "Eclipse",
-      "Visual Studio Code",
-      "Maven",
-      "Gradle",
-      "PyCharm",
-      "Anaconda",
-      "Jupyter Notebook",
-      "HeidiSQL",
-      "PuTTY",
-      "MobaXterm",
-    ],
+    items: ["VS Code", "Eclipse", "Gradle"],
   },
 ]
 
@@ -134,7 +107,7 @@ export type IntroductionSection = {
 }
 
 export const introductionPreview =
-  "한계를 두려워하지 않는 도전 정신으로 익숙하지 않은 도구와 과제를 먼저 파악해 팀에 공유하며 프로젝트를 이끈 경험이 있습니다. 계획·꼼꼼함·유연성을 바탕으로 Java/Spring 풀스택 역량을 쌓았고, 서비스 현장 근무를 통해 현장 대응력과 책임감을 길렀습니다. 주인의식과 성실함으로 신뢰받는 구성원이 되어 조직과 함께 성장하는 개발자가 되겠습니다."
+  "도전적인 문제 해결을 좋아합니다.\n\nJava/Spring으로 견고한 백엔드를 만들고,\n사용자 경험을 고려한 풀스택 개발을 하는 개발자입니다.\n\n책임감 있게 프로젝트를 이끌고,\n팀과 함께 성장하는 것을 중요하게 생각합니다."
 
 export const introductionDetail: { title: string; sections: IntroductionSection[] } = {
   title: "자기소개서",

@@ -31,9 +31,10 @@ import {
 } from "@/lib/resume"
 
 const profile = {
-  name: "최성현",
+  name: "Seonghyun Choi",
   role: "Fullstack Developer Choi Seonghyeon",
-  bio: "빠르게 구현해야 하는 순간에도 구조를 놓치지 않고, 시간이 지나도 읽기 쉬운 화면과 흐름을 만드는 개발자입니다. 기능 하나보다 전체 경험의 결을 더 중요하게 보고, 사용성과 구현의 균형이 자연스럽게 맞물리도록 다듬습니다.",
+  bio:
+    "빠르게 구현해야 하는 순간에도 구조를 지키며 구현합니다.\n기능을 빠르게 만들더라도 확장 가능한 흐름을 먼저 설계합니다.\n사용자 경험 전체를 기준으로 화면과 동선을 다듬습니다.",
   address: "서울특별시 마포구 용강동 대흥로 6길 12 502호",
   birthDateLabel: "2003.02.05 (만 23세)",
   phone: "010-8665-7363",
@@ -50,13 +51,9 @@ const MotionLink = motion.create(Link)
 
 /** Cover Letter 섹션 요약 하단 키워드 */
 const coverLetterKeywordTags = [
-  "도전적",
-  "책임감",
-  "풀스택",
+  "도전정신",
   "Java/Spring",
-  "사용자 경험",
-  "구조 설계",
-  "성장 지향",
+  "풀스택",
 ] as const
 
 const sectionRailNav: { id: string; label: string }[] = [
@@ -237,8 +234,8 @@ export default function HomePage() {
       <div className="relative w-full min-w-0">
         <SectionScrollRail items={sectionRailNav} activeId={activeSection} />
         <div className="w-full min-w-0">
-      <section className="relative flex min-h-[88svh] min-h-[88vh] flex-col justify-center px-4 pb-12 pt-[4.25rem] sm:px-6 sm:pb-14 sm:pt-20 md:px-10 md:pb-16 md:pt-24 lg:px-12">
-        <div className={`${sectionInner} flex justify-center`}>
+      <section className="relative flex min-h-[88svh] min-h-[88vh] flex-col justify-center px-4 pb-24 pt-[4.25rem] sm:px-6 sm:pb-28 sm:pt-20 md:px-10 md:pb-32 md:pt-24 lg:px-12">
+        <div className={sectionInner}>
           <motion.div
             initial="hidden"
             animate="show"
@@ -246,78 +243,74 @@ export default function HomePage() {
               hidden: {},
               show: { transition: { staggerChildren: 0.1, delayChildren: 0.06 } },
             }}
-            className="w-full max-w-2xl text-center md:max-w-3xl lg:max-w-5xl"
+            className="mx-auto w-full max-w-[900px]"
           >
-            <motion.p
-              variants={{
-                hidden: { opacity: 0, y: 16 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-              }}
-              className="mb-4 font-mono text-[10px] font-semibold uppercase tracking-[0.28em] text-[#6366f1] sm:mb-5 sm:text-[11px] sm:tracking-[0.32em] md:mb-6 md:text-xs"
-            >
-              {profile.role}
-            </motion.p>
-            <motion.h1
-              variants={{
-                hidden: { opacity: 0, y: 28 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.65, ease: [0.22, 1, 0.36, 1] } },
-              }}
-              lang="ko"
-              className="font-display mx-auto max-w-[min(100%,40rem)] text-[clamp(1.55rem,6.2vw,3.5rem)] font-semibold leading-[1.12] tracking-[-0.04em] break-keep sm:leading-[1.08] md:max-w-5xl md:leading-[1.06]"
-            >
-              <span className="text-[#1e293b]">
-                사용자 경험과 안정감을 함께 보는{" "}
-              </span>
-              <span className="inline-block whitespace-nowrap text-[#2563eb] sm:inline">
-                풀스택 개발자
-              </span>
-              <br />
-              <span className="text-[#1e293b]">구조를 지키고, 확장 가능하게 만듭니다.</span>
-            </motion.h1>
-            <motion.p
-              variants={{
-                hidden: { opacity: 0, y: 18 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
-              }}
-              className="mx-auto mt-6 max-w-xl px-0.5 text-[15px] font-normal leading-[1.75] text-[#475569] sm:mt-8 sm:text-base md:mt-10 md:text-lg"
-            >
-              {profile.bio}
-            </motion.p>
+            <div className="bg-transparent">
+              <div className="px-4 py-[80px] sm:px-8 sm:py-[90px] lg:px-[80px] lg:py-[100px]">
+                {/* Left: text + actions */}
+                <div className="mx-auto min-w-0 max-w-[680px] text-center">
+                  <motion.p
+                    variants={{
+                      hidden: { opacity: 0, y: 14 },
+                      show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                    className="font-display text-[clamp(2.25rem,4.2vw,2.5rem)] font-semibold leading-[1.06] tracking-[-0.04em] text-[#4F6EF7]"
+                  >
+                    Full Stack Developer
+                  </motion.p>
 
-            <motion.div
-              variants={{
-                hidden: { opacity: 0, y: 14 },
-                show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
-              }}
-              className="mt-6 flex flex-col items-stretch gap-3 sm:mt-8 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center sm:gap-x-8 sm:gap-y-3 md:mt-10 md:gap-x-10"
-            >
-              <Link
-                href={profile.links.github}
-                target="_blank"
-                className="group inline-flex items-center justify-center gap-2 rounded-xl py-2 text-sm font-normal text-[#4F6EF7] transition hover:text-[#3b5bdb] sm:justify-start sm:py-0 md:text-[15px]"
-              >
-                <Github className="h-4 w-4 text-[#4F6EF7] transition group-hover:text-[#3b5bdb]" />
-                <span className="relative">
-                  GitHub
-                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-[#4F6EF7] to-[#6366f1] transition-all duration-300 group-hover:w-full" />
-                </span>
-              </Link>
-              <Link
-                href={`mailto:${profile.links.email}`}
-                className="group inline-flex items-center justify-center gap-2 rounded-xl py-2 text-sm font-normal text-[#4F6EF7] transition hover:text-[#3b5bdb] sm:justify-start sm:py-0 md:text-[15px]"
-              >
-                <Mail className="h-4 w-4 text-[#4F6EF7] transition group-hover:text-[#3b5bdb]" />
-                <span className="relative">
-                  Email
-                  <span className="absolute -bottom-0.5 left-0 h-px w-0 bg-gradient-to-r from-[#4F6EF7] to-[#6366f1] transition-all duration-300 group-hover:w-full" />
-                </span>
-              </Link>
-            </motion.div>
+                  <motion.h1
+                    variants={{
+                      hidden: { opacity: 0, y: 18 },
+                      show: { opacity: 1, y: 0, transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                    className="mt-5 font-display text-[20px] font-semibold leading-snug tracking-[-0.02em] text-[#1e293b] sm:text-[22px]"
+                  >
+                    {profile.name}
+                  </motion.h1>
+
+                  <motion.p
+                    variants={{
+                      hidden: { opacity: 0, y: 18 },
+                      show: { opacity: 1, y: 0, transition: { duration: 0.55, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                    className="mt-7 max-w-[680px] whitespace-pre-line text-[14px] font-medium leading-[1.8] text-[#334155] sm:text-[15px]"
+                  >
+                    {profile.bio}
+                  </motion.p>
+
+                  <motion.div
+                    variants={{
+                      hidden: { opacity: 0, y: 14 },
+                      show: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.22, 1, 0.36, 1] } },
+                    }}
+                    className="mt-12 flex flex-col items-center gap-3 sm:mt-14 sm:flex-row sm:flex-wrap sm:justify-center sm:gap-6"
+                  >
+                    <Link
+                      href={profile.links.github}
+                      target="_blank"
+                      className="inline-flex items-center justify-center gap-2 rounded-full bg-[#4F6EF7] px-5 py-3 text-sm font-semibold text-white shadow-[0_12px_34px_-18px_rgba(79,110,247,0.55)] transition hover:brightness-110"
+                    >
+                      <Github className="h-4 w-4" aria-hidden />
+                      GitHub
+                    </Link>
+                    <Link
+                      href={`mailto:${profile.links.email}`}
+                      className="inline-flex items-center gap-2 text-sm font-semibold text-[#4F6EF7] underline decoration-[#4F6EF7]/40 underline-offset-4 transition hover:decoration-[#4F6EF7]/80"
+                    >
+                      <Mail className="h-4 w-4" aria-hidden />
+                      Email
+                    </Link>
+                  </motion.div>
+                </div>
+              </div>
+            </div>
           </motion.div>
         </div>
 
+        {/* Scroll indicator: flow layout (no overlap) */}
         <motion.div
-          className="absolute bottom-6 left-1/2 -translate-x-1/2 sm:bottom-10"
+          className="mt-10 flex justify-center sm:mt-12"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.85, duration: 0.5 }}
@@ -683,9 +676,13 @@ export default function HomePage() {
               <div className={sectionLineClass} />
             </div>
             <div className="mx-auto mt-8 max-w-2xl sm:mt-10 md:mt-14">
-              <p className="text-center text-[15px] leading-[1.75] text-text-muted sm:text-[17px] sm:leading-[1.8] md:text-lg">
-                {introductionPreview}
-              </p>
+              <div className="space-y-6 text-center text-[16px] font-normal leading-[1.8] tracking-[0.01em] text-[#444] sm:text-[17px] md:text-[18px]">
+                {introductionPreview.split("\n\n").map((paragraph) => (
+                  <p key={paragraph} className="whitespace-pre-line">
+                    {paragraph}
+                  </p>
+                ))}
+              </div>
               <ul
                 className="mt-6 flex list-none flex-wrap justify-center gap-2 p-0"
                 role="list"
