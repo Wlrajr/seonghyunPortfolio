@@ -31,7 +31,7 @@ import {
 } from "@/lib/resume"
 
 const profile = {
-  name: "Seonghyun Choi",
+  name: "최성현",
   role: "Fullstack Developer Choi Seonghyeon",
   bio:
     "빠르게 구현해야 하는 순간에도 구조를 지키며 구현합니다.\n기능을 빠르게 만들더라도 확장 가능한 흐름을 먼저 설계합니다.\n사용자 경험 전체를 기준으로 화면과 동선을 다듬습니다.",
@@ -43,6 +43,7 @@ const profile = {
     email: "bri0205@naver.com",
   },
 }
+const heroDisplayName = "Seonghyun Choi"
 
 const navTopLinkClass =
   "shrink-0 text-sm font-medium text-text-muted transition-colors hover:text-sky-900 md:text-[15px]"
@@ -266,7 +267,7 @@ export default function HomePage() {
                     }}
                     className="mt-5 font-display text-[20px] font-semibold leading-snug tracking-[-0.02em] text-[#1e293b] sm:text-[22px]"
                   >
-                    {profile.name}
+                    {heroDisplayName}
                   </motion.h1>
 
                   <motion.p
